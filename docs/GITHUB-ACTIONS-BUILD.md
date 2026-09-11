@@ -6,7 +6,7 @@
 .github/workflows/build-apk.yml
 ```
 
-这个工作流会在 `main`／`master` 推送、Pull Request，以及手动点击 **Run workflow** 时运行。它会安装 JDK 17、Python 3.11、Android SDK 35 和 Gradle 8.11.1，生成 Debug APK，并上传到工作流页面的 **Artifacts**。
+这个工作流会在 `main`／`master` 推送、Pull Request，以及手动点击 **Run workflow** 时运行。它会安装 JDK 17、Python 3.11、Android SDK 35 和 Gradle 8.11.1，只做编译验证，不再上传 APK。正式包只在打 Tag 时由 Release 工作流产出，见 [发版流程](RELEASE-FLOW.md)。
 
 ## 重要：不要只把 ZIP 文件本身提交到仓库
 
@@ -31,19 +31,14 @@ git push -u origin main
 
 仓库已经关联远程地址时，不要重复执行 `git remote add origin`，直接 `git add`、`git commit`、`git push`。
 
-## 从网页手动编译
+## 从网页手动验证编译
 
 1. 打开仓库的 **Actions** 页面。
 2. 选择 **Build Jingliu APK**。
 3. 点击 **Run workflow**。
-4. 等待 `Build debug APK` 变绿。
-5. 打开该次运行，在页面底部下载：
+4. 等待 `Build debug APK` 变绿即表示编译通过。
 
-```text
-Jingliu-debug-apk-运行编号
-```
-
-解压 GitHub 下载的 Artifact 后可看到 5 个分包 APK（`Jingliu-debug-arm64-v8a-*` 等）、`SHA256SUMS.txt` 和 `build-info.txt`。真机优先装 `arm64-v8a`，机型不明装 `universal`。
+该工作流只验证、不产出可下载的 APK。正式分包（`Jingliu-v0.8.2-arm64-v8a.apk` 等）只在打 Tag 后出现在 **Releases** 页面。真机优先装 `arm64-v8a`，机型不明装 `universal`。
 
 ## 为什么工作流不依赖 gradle-wrapper.jar
 

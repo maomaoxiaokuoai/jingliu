@@ -37,8 +37,8 @@ android {
         targetSdk = 35
         buildConfigField("String", "QR_AUTH_BRIDGE_URL", "\"$qrBridge\"")
         buildConfigField("boolean", "FRAME_METRICS_ENABLED", "false")
-        versionCode = 19
-        versionName = "0.8.2-split-apks-fix1"
+        versionCode = 20
+        versionName = "0.8.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64", "x86") }
     }

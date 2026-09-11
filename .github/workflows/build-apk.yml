@@ -126,14 +126,13 @@ jobs:
             :core:test \
             :app:testDebugUnitTest 2>&1 | tee build-logs/unit-tests.log
 
-      - name: Prepare downloadable APKs
+      - name: Verify split APK outputs
         if: success()
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p artifacts
-          # ABI splits produce one APK per ABI plus a universal APK, e.g.
-          # app-arm64-v8a-debug.apk, app-universal-debug.apk.
+          # Compile gate only: no debug APKs are published from this workflow.
+          # Release APKs are produced exclusively by the Release workflow on tags.
           shopt -s nullglob
           apks=(app/build/outputs/apk/debug/*.apk)
           if [ "${#apks[@]}" -lt 5 ]; then
@@ -143,32 +142,8 @@ jobs:
           fi
           for apk in "${apks[@]}"; do
             test -s "$apk"
-            base="$(basename "$apk" .apk)"
-            # app-arm64-v8a-debug -> arm64-v8a, app-universal-debug -> universal
-            abi="${base#app-}"
-            abi="${abi%-debug}"
-            output="artifacts/Jingliu-debug-${abi}-${GITHUB_RUN_NUMBER}.apk"
-            cp "$apk" "$output"
           done
-          (cd artifacts && sha256sum ./*.apk > SHA256SUMS.txt)
-          {
-            echo "commit=${GITHUB_SHA}"
-            echo "run_number=${GITHUB_RUN_NUMBER}"
-            echo "java=$(java -version 2>&1 | head -n 1)"
-            echo "python=$(python --version 2>&1)"
-            echo "gradle=$(gradle --version | awk '/^Gradle / { print $2; exit }')"
-            ls -l artifacts/*.apk | awk '{print "apk_"$9"="$5"bytes"}'
-          } > artifacts/build-info.txt
-          ls -lh artifacts/
-
-      - name: Upload APK
-        if: success()
-        uses: actions/upload-artifact@v7
-        with:
-          name: Jingliu-debug-apk-${{ github.run_number }}
-          path: artifacts/
-          if-no-files-found: error
-          retention-days: 30
+          ls -lh app/build/outputs/apk/debug/
 
       - name: Upload build logs and reports
         if: always()
