@@ -8,6 +8,7 @@
 - `.github/workflows/release.yml`：`push tag v*` → 只编译 Release 分包 → 自动创建 GitHub Release 并挂附件：
   - `Jingliu-<tag>-<abi>.apk`（正式签名，有则用正式，无则 debug 兜底并在日志警告）
   - 例：Tag `v0.8.2` → `Jingliu-v0.8.2-arm64-v8a.apk`，Release 标题为 `Jingliu v0.8.2`
+- Release 说明区刻意留空：工作流固定写入不可见的 HTML 注释占位。不要删掉它——正文为空时 GitHub 会自动把该 Tag 的提交信息显示出来。
 
 ## 2. 用户该下哪个包（ABI 对照）
 
