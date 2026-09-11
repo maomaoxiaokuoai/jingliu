@@ -171,6 +171,11 @@ jobs:
             abi="${abi%-release}"
             cp "$apk" "artifacts/Jingliu-${tag}-${abi}.apk"
           done
+          # Invisible one-character placeholder (U+200B zero-width space) for the
+          # release notes. The notes area must stay non-empty, otherwise GitHub
+          # falls back to showing the tagged commit's subject; HTML comments and
+          # whitespace get rendered/trimmed visibly, a zero-width space does not.
+          printf '\u200b' > release-notes.txt
           ls -lh artifacts/
 
       - name: Publish GitHub Release
@@ -180,10 +185,8 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Jingliu ${{ github.ref_name }}
           generate_release_notes: false
-          # Keep the notes area visually empty. GitHub renders the tagged
-          # commit's subject when the body is empty, so use an invisible
-          # HTML comment as a non-empty placeholder instead.
-          body: "<!-- no release notes -->"
+          # Keep the notes area visually empty (see release-notes.txt above).
+          body_path: release-notes.txt
           fail_on_unmatched_files: true
           files: |
             artifacts/*.apk
