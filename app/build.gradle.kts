@@ -1,4 +1,4 @@
-import com.android.build.gradle.api.ApkVariantOutput
+import com.android.build.api.variant.FilterConfiguration.FilterType.*
 import java.util.Properties
 
 plugins {
@@ -38,7 +38,7 @@ android {
         buildConfigField("String", "QR_AUTH_BRIDGE_URL", "\"$qrBridge\"")
         buildConfigField("boolean", "FRAME_METRICS_ENABLED", "false")
         versionCode = 19
-        versionName = "0.8.2-split-apks"
+        versionName = "0.8.2-split-apks-fix1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64", "x86") }
     }
@@ -88,13 +88,19 @@ android {
             buildConfigField("boolean", "FRAME_METRICS_ENABLED", "true")
         }
     }
-    // Distinct versionCode per split APK (universal keeps the base code).
-    // Higher code wins on capable devices, so each device prefers its own ABI split.
-    applicationVariants.all {
-        outputs.map { it as ApkVariantOutput }.forEach { output ->
-            val abi = output.getFilter("ABI") ?: return@forEach
-            val abiCode = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" to 3, "x86_64" to 4)[abi] ?: 0
-            output.versionCode.set(output.versionCode.get() * 10 + abiCode)
+}
+// Distinct versionCode per split APK (universal keeps the base code).
+// Higher code wins on capable devices, so each device prefers its own ABI split.
+// Uses the AGP 8 Variant API: the legacy applicationVariants/outputs API was removed.
+val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" to 3, "x86_64" to 4)
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            val name = output.filters.find { it.filterType == ABI }?.identifier
+            val baseAbiCode = abiCodes[name]
+            if (baseAbiCode != null) {
+                output.versionCode.set(baseAbiCode * 1000 + (output.versionCode.get() ?: 0))
+            }
         }
     }
 }

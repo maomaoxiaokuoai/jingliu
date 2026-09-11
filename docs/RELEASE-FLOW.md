@@ -22,7 +22,7 @@
 | `x86` | 老 32 位模拟器 |
 | `universal` | 不知道自己机型的直接装这个（体积最大，通吃） |
 
-分包原理：每个包只含一个架构的 native 库（Chaquopy Python 运行库、ffmpeg、`lxml/aiohttp` 原生部分），`universal` 含全部 4 个架构。分包 versionCode = `versionCode*10+abi码`（universal 保持原值），各包版本码唯一。
+分包原理：每个包只含一个架构的 native 库（Chaquopy Python 运行库、ffmpeg、`lxml/aiohttp` 原生部分），`universal` 含全部 4 个架构。分包 versionCode = `abi码*1000+versionCode`（universal 保持原值），各包版本码唯一。
 
 ## 2. 一次性配置 Secrets
 
