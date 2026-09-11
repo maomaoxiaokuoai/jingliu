@@ -179,7 +179,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Jingliu ${{ github.ref_name }}
-          generate_release_notes: true
+          generate_release_notes: false
           fail_on_unmatched_files: true
           files: |
             artifacts/*.apk
