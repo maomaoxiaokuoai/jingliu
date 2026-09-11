@@ -1,0 +1,176 @@
+[
+  {
+    "path": "app/build.gradle.kts",
+    "status": "modified",
+    "before_sha256": "12e170371db6ffc1df5a843bb49e0bf89e6181fa29cbb112bb3d0d5b332ef559",
+    "after_sha256": "f08ba51b7fb100650269d458654c85f38850832dab995d6e4334bfabb2c95b1e"
+  },
+  {
+    "path": "app/src/androidTest/java/com/luma/downloader/MenuRenderingTest.kt",
+    "status": "modified",
+    "before_sha256": "1c4eb776497f176eaa33eb0a4f2e9c7c3b5b9a749aef5d397efde4d703a4b564",
+    "after_sha256": "d122fdb444dd0404e51f262c380e3e008f18069d79ee071d266f003581bb26e4"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/auth/BiliAuth.kt",
+    "status": "modified",
+    "before_sha256": "ae1deb73b0cfbfd2d7cf82bc29fdc8ffbc46d7276d286d9da8c1aea773a66bf3",
+    "after_sha256": "c6304c98e89bc0da908a881ae245cdf41e3155c873cdecf711c27966e0d9393e"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/auth/OfficialQrClient.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "fe0ecd43e8573bee2855f20ec54ca90d13d25199ee52fc2ff6b9e8fabeaae0b8"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/data/LumaViewModel.kt",
+    "status": "modified",
+    "before_sha256": "dfb464c53c98b4a09e38c5928afe053975bad7eaa2381ab113fc5d28a22fe787",
+    "after_sha256": "f9d85a17a9c718774e2f73eb4891922030225822c27b9decc1a5354507f8bc32"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/data/OverlayPolicy.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "9e2e0ade5470f3bbf451d42f380b83fc998b3fc5cc52839cd8a82904481ccf1a"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/download/DownloadWorker.kt",
+    "status": "modified",
+    "before_sha256": "087b1379ffc019e5b86b80b05f3e126e7f0038ebc4c6d59420c16ba4c83ee551",
+    "after_sha256": "e96ac4a35a4be22f57a0000f1da2a8ff2cc7c258926cc3ae15e00915828b4248"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/AccountScreen.kt",
+    "status": "modified",
+    "before_sha256": "189fccd3ea0e083619f32653b7ca8863ef84b2df34111d2d3e760fd1e7bf5701",
+    "after_sha256": "d3eab12215c2d477256b63cac04e90a831a2f744faacbfff9d0492bbf39b8d98"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/GlassAlertDialog.kt",
+    "status": "modified",
+    "before_sha256": "86c82a5f4e271f5adced0a723472b0f092c4a1197dddc26f2b4ef88918cbb773",
+    "after_sha256": "1c4e94b0907b0c14d856778028b368ad41ba6086214c1e43da924e0dd91ab66e"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/GlassOverlayHost.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "f098a8dff3da6ce52a82cba2b2a53fa6d78df08eae4cfb07c06750a80f68c8fb"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/GlassSurface.kt",
+    "status": "modified",
+    "before_sha256": "78ebd3d6dab3a23eee28a6e606040c13f8e59990c200700ea55a54bf1c16b494",
+    "after_sha256": "35d300517bc2752d5fc3a73649b08618636f4917600d56a31385e7ff1ebe507d"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/LiquidControls.kt",
+    "status": "modified",
+    "before_sha256": "b88a4beefb6c203e4ea27563214986fa4a381e664aac1431a6bf9975e6eee9c1",
+    "after_sha256": "807ce72d90c6ee8813a3bf82bcbbae11862fe14dd216bff6f84d0fdaa0dfb24c"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/OfficialQrPage.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "9c465cb4b2f0dca09ac8299e6a8d16a89e91d55e5289064b02966c0101536ff6"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/SettingsScreen.kt",
+    "status": "modified",
+    "before_sha256": "6724b3729003c76fa409bbf21c421da8acc0c4c5946f8580cc86994322511cd2",
+    "after_sha256": "9a14496872c74902a8ac3bcb92c3b6ce9ddea904bae5092e86ab085a02ef35c1"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/ShiliuApp.kt",
+    "status": "modified",
+    "before_sha256": "a94b3f7ac27c0f185e840eeb91bd7904d627d703397aa54ba600577bf943a1f7",
+    "after_sha256": "a6e16ac2e46d37f8e48c245db6ad008cd578dc05a943f7410b35260cba34b0e1"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/SpringDropdownMenu.kt",
+    "status": "modified",
+    "before_sha256": "41e2acf23942634267cb4ed4901933d1d10debf1ee102c071e433ab9a8b6080a",
+    "after_sha256": "1ec892f04045c7247b53e86645dd0022260546f80c4f1959b306c901f2d3499a"
+  },
+  {
+    "path": "app/src/main/java/com/luma/downloader/ui/UiParts.kt",
+    "status": "modified",
+    "before_sha256": "7833e30bb8a1bb746b53df6ff2314eb2d1845cf4cd05dacd3699d716d2536f67",
+    "after_sha256": "ebd68f993bc2b246fd9be4cfa9b7b3507e3112b9f1e9993348e8bb898a1eb4e4"
+  },
+  {
+    "path": "app/src/test/java/com/luma/downloader/OverlayLifecycleChecks.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "4e5121a22a93495a53cb1776b46c00271d90f57888ab76d9597df523a60d897c"
+  },
+  {
+    "path": "app/src/test/java/com/luma/downloader/OverlayLifecycleTest.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "e356565ee7084ac5d6c0efbea658a89555d03581bc47f9c2a8415b52f95b46a6"
+  },
+  {
+    "path": "auth-bridge/build.gradle.kts",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "6b060161a499c1da579cc4943642022cf31d0bd7ed583fcd7561a60597b7a28d"
+  },
+  {
+    "path": "auth-bridge/src/main/kotlin/com/luma/bridge/BridgeEngine.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "c0c64fd12341979ec35e1b37f295ab651b625b1cbc430ee93757fbfd50fb49a4"
+  },
+  {
+    "path": "auth-bridge/src/main/kotlin/com/luma/bridge/Main.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "ad05919c47adeb1aedfef3ecaa9cb617a8e2ef0d3cde5cc16e70ea998031be1c"
+  },
+  {
+    "path": "auth-bridge/src/main/kotlin/com/luma/bridge/Providers.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "e1d53de5bfcc8b1264e1158aa7043fbc17ba2db7756abefb8f9eff844d8a384a"
+  },
+  {
+    "path": "auth-bridge/src/test/kotlin/com/luma/bridge/BridgeChecks.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "ebb980b10329fafd409dc343895eda29b7e93f8a7f9a6133bb073ed802300051"
+  },
+  {
+    "path": "auth-bridge/src/test/kotlin/com/luma/bridge/BridgeTest.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "3f17d9807cb46380abffc3528089dab4d2eac35e6b9ad14174d660d358c66478"
+  },
+  {
+    "path": "core/src/main/kotlin/com/luma/core/QrAuthorization.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "512d779cade171a723a53f2bd3b57f434daa98f0cc3bcabb284d8f9d2a58a5f5"
+  },
+  {
+    "path": "core/src/test/kotlin/com/luma/core/QrProtocolChecks.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "d6ab4a880ea827209af013d1cb2b9e93a2d74b66b6ee72d64ee58b364ea9f571"
+  },
+  {
+    "path": "core/src/test/kotlin/com/luma/core/QrProtocolTest.kt",
+    "status": "added",
+    "before_sha256": null,
+    "after_sha256": "6a0ec32f6c93f08124b8b3b5c0e85122ce4bea40a1654397edf63b19e7cc19e0"
+  },
+  {
+    "path": "settings.gradle.kts",
+    "status": "modified",
+    "before_sha256": "982f6b22baddb7ca9d34d0a062a4c225a985f250690afb98fc03ee9f4ab7a9bb",
+    "after_sha256": "ed92fda24c1e3ac286631cf9a4928c48b4763cb48354b9ec2ee8b338e9654cb9"
+  }
+]

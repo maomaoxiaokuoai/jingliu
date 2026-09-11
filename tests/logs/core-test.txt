@@ -1,0 +1,1 @@
+Core regression: 76 assertions passed (synthetic fixtures + localhost HTTP; no live platform verification).

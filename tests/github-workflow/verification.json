@@ -1,0 +1,18 @@
+{
+  "artifact_scope": "full 0.8.1 source plus GitHub Actions APK workflow",
+  "workflow": ".github/workflows/build-apk.yml",
+  "workflow_yaml_1_2_parse": true,
+  "bash_run_blocks_syntax_checked": 6,
+  "source_structure_checks": 98,
+  "production_kotlin_files_seen_by_structure_check": 85,
+  "kotlin_kts_psi_files_parsed": 315,
+  "kotlin_psi_syntax_errors": 0,
+  "android_gradle_build_executed_here": false,
+  "apk_generated_here": false,
+  "reason": "The delivery container has no Android SDK and is not a GitHub Actions runner; the workflow is prepared for GitHub-hosted Ubuntu.",
+  "ci_gradle_version": "8.11.1",
+  "ci_java_version": "17",
+  "ci_python_version": "3.11",
+  "ci_android_compile_sdk": 35,
+  "ci_android_build_tools": "35.0.0"
+}

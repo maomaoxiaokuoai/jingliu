@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "platform": "bilibili",
+      "file": "app/src/main/res/drawable-nodpi/platform_bilibili.png",
+      "sha256": "0853c699523362c85abc6f7ae923fc0a03aa044e949d044b3abcb1bec3a79c0a",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "douyin",
+      "file": "app/src/main/res/drawable-nodpi/platform_douyin.png",
+      "sha256": "866447d4d74d7ad430f82182e44bb266a1e60f55a4ef7cf72dcadb4bcf8b261e",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "kuaishou",
+      "file": "app/src/main/res/drawable-nodpi/platform_kuaishou.png",
+      "sha256": "6f60e81705fadef9264bfc2ee6eb7a5efc3cffcdf18d7b53df159d855e09a49e",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "xiaohongshu",
+      "file": "app/src/main/res/drawable-nodpi/platform_xiaohongshu.png",
+      "sha256": "3368bf32ddd90642e504fb3f526e2cf9e8f5cf4bc0defc37cafb10d581da06e4",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "youtube",
+      "file": "app/src/main/res/drawable-nodpi/platform_youtube.png",
+      "sha256": "f4e0788953fb4c9485afd33f8ec518907e54c495acb71b75917442659b48107d",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "tiktok",
+      "file": "app/src/main/res/drawable-nodpi/platform_tiktok.png",
+      "sha256": "8a9f7593a3223dbe3f252db02aa793c6d5dccb05aca7bc70fadc7b93a4e3a75b",
+      "unchanged_from_input": true
+    },
+    {
+      "platform": "x",
+      "file": "app/src/main/res/drawable-nodpi/platform_x.png",
+      "sha256": "f5178334fcb6ca8cbcc7be4130d2b9c683f1d0747bd8a582851408dcb0c5a124",
+      "unchanged_from_input": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path name="downloads" path="Download/拾流/" />
+    <files-path name="internal_downloads" path="拾流/" />
+    <external-files-path name="downloads_jingliu" path="Download/镜流/" />
+    <files-path name="internal_downloads_jingliu" path="镜流/" />
+</paths>

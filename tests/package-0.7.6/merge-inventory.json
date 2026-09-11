@@ -1,0 +1,23 @@
+{
+  "baseline_zip": "Jingliu-Android-0.7.5-完整源码.zip",
+  "baseline_sha256": "c5208c2bf13d5cffdf24c32f7137ba3e791f6cc565147fa364d84ff1417f2bfa",
+  "baseline_file_count": 248,
+  "all_original_files_retained": true,
+  "original_images_identical": 16,
+  "changed_production_files": [
+    "app/build.gradle.kts",
+    "app/src/main/java/com/luma/downloader/AppGraph.kt",
+    "app/src/main/java/com/luma/downloader/data/LumaViewModel.kt",
+    "app/src/main/java/com/luma/downloader/data/TaskStore.kt",
+    "app/src/main/java/com/luma/downloader/data/UiSettings.kt",
+    "app/src/main/java/com/luma/downloader/download/DownloadWorker.kt",
+    "app/src/main/java/com/luma/downloader/engine/ExtractorRouter.kt",
+    "app/src/main/java/com/luma/downloader/ui/DownloadsScreen.kt",
+    "app/src/main/java/com/luma/downloader/ui/ParseScreen.kt",
+    "app/src/main/java/com/luma/downloader/ui/SettingsScreen.kt",
+    "core/src/main/kotlin/com/luma/core/Extractors.kt",
+    "core/src/main/kotlin/com/luma/core/Model.kt",
+    "core/src/main/kotlin/com/luma/core/Network.kt"
+  ],
+  "integration_note": "Original 0.7.6 attachments merged; missing companion model/router/service/ViewModel/UI wiring reconstructed and host-tested this turn. Not a claim of byte-identical recovery of unseen source."
+}

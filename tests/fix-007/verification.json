@@ -1,0 +1,6 @@
+{
+  "note": "Complete-source integration checked in package-0.7.6. The previous isolated download-repair log is historical; do not sum or reuse that test count.",
+  "current_report": "../package-0.7.6/verification.json",
+  "current_new_download_cases": 31,
+  "android_build_completed": false
+}

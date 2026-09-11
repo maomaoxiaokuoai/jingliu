@@ -1,0 +1,367 @@
+{
+  "scope": "Offline structure/XML/settings refs only; no Android type-check or live platform validation",
+  "main_kotlin_files": 65,
+  "assertions": 90,
+  "checks": [
+    {
+      "name": "file: settings.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "file: build.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "file: app/build.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "file: core/build.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "file: app/src/main/AndroidManifest.xml",
+      "passed": true
+    },
+    {
+      "name": "file: setup-wrapper.bat",
+      "passed": true
+    },
+    {
+      "name": "file: setup-wrapper.ps1",
+      "passed": true
+    },
+    {
+      "name": "file: setup-wrapper.sh",
+      "passed": true
+    },
+    {
+      "name": "file: gradlew",
+      "passed": true
+    },
+    {
+      "name": "file: gradlew.bat",
+      "passed": true
+    },
+    {
+      "name": "file: gradle/wrapper/gradle-wrapper.properties",
+      "passed": true
+    },
+    {
+      "name": "file: README.md",
+      "passed": true
+    },
+    {
+      "name": "file: LICENSE",
+      "passed": true
+    },
+    {
+      "name": "no TODO()/NotImplementedError business stubs",
+      "passed": true
+    },
+    {
+      "name": "no UI demo task arrays",
+      "passed": true
+    },
+    {
+      "name": "no font files",
+      "passed": true
+    },
+    {
+      "name": "no app secret/signing inputs",
+      "passed": true
+    },
+    {
+      "name": "no shipped machine-specific SDK config",
+      "passed": true
+    },
+    {
+      "name": "12 XML files parse",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_kuaishou exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_x exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_douyin exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_youtube exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_tiktok exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.ic_download exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_bilibili exists",
+      "passed": true
+    },
+    {
+      "name": "R.drawable.platform_xiaohongshu exists",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/ic_jingliu_background",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/ic_jingliu_foreground",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/ic_jingliu_monochrome",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/ic_jingliu_background",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/ic_jingliu_foreground",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/jingliu_icon_foreground",
+      "passed": true
+    },
+    {
+      "name": "XML ref drawable/jingliu_icon_legacy",
+      "passed": true
+    },
+    {
+      "name": "XML ref xml/data_extraction_rules",
+      "passed": true
+    },
+    {
+      "name": "XML ref mipmap/ic_launcher",
+      "passed": true
+    },
+    {
+      "name": "XML ref mipmap/ic_launcher",
+      "passed": true
+    },
+    {
+      "name": "XML ref xml/file_paths",
+      "passed": true
+    },
+    {
+      "name": "Manifest class ShiliuApplication",
+      "passed": true
+    },
+    {
+      "name": "Manifest class MainActivity",
+      "passed": true
+    },
+    {
+      "name": "Manifest class TaskActionReceiver",
+      "passed": true
+    },
+    {
+      "name": "known setting autoRefresh",
+      "passed": true
+    },
+    {
+      "name": "known setting blur",
+      "passed": true
+    },
+    {
+      "name": "known setting bounce",
+      "passed": true
+    },
+    {
+      "name": "known setting buttonHeight",
+      "passed": true
+    },
+    {
+      "name": "known setting buttonShape",
+      "passed": true
+    },
+    {
+      "name": "known setting buttonStyle",
+      "passed": true
+    },
+    {
+      "name": "known setting clipboardPrompt",
+      "passed": true
+    },
+    {
+      "name": "known setting concurrency",
+      "passed": true
+    },
+    {
+      "name": "known setting controlLift",
+      "passed": true
+    },
+    {
+      "name": "known setting corner",
+      "passed": true
+    },
+    {
+      "name": "known setting defaultQuality",
+      "passed": true
+    },
+    {
+      "name": "known setting density",
+      "passed": true
+    },
+    {
+      "name": "known setting duration",
+      "passed": true
+    },
+    {
+      "name": "known setting expireNotify",
+      "passed": true
+    },
+    {
+      "name": "known setting filename",
+      "passed": true
+    },
+    {
+      "name": "known setting fontScale",
+      "passed": true
+    },
+    {
+      "name": "known setting glassButtons",
+      "passed": true
+    },
+    {
+      "name": "known setting grain",
+      "passed": true
+    },
+    {
+      "name": "known setting grainStrength",
+      "passed": true
+    },
+    {
+      "name": "known setting groupGap",
+      "passed": true
+    },
+    {
+      "name": "known setting haptics",
+      "passed": true
+    },
+    {
+      "name": "known setting hideProfile",
+      "passed": true
+    },
+    {
+      "name": "known setting highlight",
+      "passed": true
+    },
+    {
+      "name": "known setting increaseContrast",
+      "passed": true
+    },
+    {
+      "name": "known setting material",
+      "passed": true
+    },
+    {
+      "name": "known setting menuMorph",
+      "passed": true
+    },
+    {
+      "name": "known setting motion",
+      "passed": true
+    },
+    {
+      "name": "known setting navCollapse",
+      "passed": true
+    },
+    {
+      "name": "known setting notifyDone",
+      "passed": true
+    },
+    {
+      "name": "known setting parserEngine",
+      "passed": true
+    },
+    {
+      "name": "known setting performance",
+      "passed": true
+    },
+    {
+      "name": "known setting press",
+      "passed": true
+    },
+    {
+      "name": "known setting pressLight",
+      "passed": true
+    },
+    {
+      "name": "known setting reduceMotion",
+      "passed": true
+    },
+    {
+      "name": "known setting reduceTransparency",
+      "passed": true
+    },
+    {
+      "name": "known setting retry",
+      "passed": true
+    },
+    {
+      "name": "known setting shadow",
+      "passed": true
+    },
+    {
+      "name": "known setting stats",
+      "passed": true
+    },
+    {
+      "name": "known setting swipeBack",
+      "passed": true
+    },
+    {
+      "name": "known setting switchColor",
+      "passed": true
+    },
+    {
+      "name": "known setting tabDistance",
+      "passed": true
+    },
+    {
+      "name": "known setting tabMorph",
+      "passed": true
+    },
+    {
+      "name": "known setting tabTransition",
+      "passed": true
+    },
+    {
+      "name": "known setting titleLines",
+      "passed": true
+    },
+    {
+      "name": "known setting transparency",
+      "passed": true
+    },
+    {
+      "name": "known setting wifiOnly",
+      "passed": true
+    },
+    {
+      "name": "shell syntax gradlew",
+      "passed": true
+    },
+    {
+      "name": "shell syntax setup-wrapper.sh",
+      "passed": true
+    },
+    {
+      "name": "shell syntax build-debug.sh",
+      "passed": true
+    }
+  ]
+}

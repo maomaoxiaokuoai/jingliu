@@ -1,0 +1,19 @@
+{
+  "baseline": "Jingliu-Android-0.7.8-文案精简与Cookie导入-完整源码.zip",
+  "modified_existing_production_files": [
+    "app/build.gradle.kts",
+    "app/src/main/java/com/luma/downloader/AppGraph.kt",
+    "app/src/main/java/com/luma/downloader/MainActivity.kt",
+    "app/src/main/java/com/luma/downloader/auth/BiliAuth.kt",
+    "app/src/main/java/com/luma/downloader/auth/EmbeddedLoginActivity.kt",
+    "app/src/main/java/com/luma/downloader/auth/SessionMaintenanceWorker.kt",
+    "app/src/main/java/com/luma/downloader/auth/SessionVault.kt",
+    "app/src/main/java/com/luma/downloader/data/LumaViewModel.kt",
+    "app/src/main/java/com/luma/downloader/engine/ExtractorRouter.kt",
+    "app/src/main/java/com/luma/downloader/ui/AccountScreen.kt",
+    "core/src/main/kotlin/com/luma/core/BrowserSessionPolicy.kt"
+  ],
+  "removed_baseline_files": [],
+  "original_android_resources_identical": true,
+  "glass_and_qr_ui_bytes_identical": true
+}

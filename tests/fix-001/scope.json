@@ -1,0 +1,21 @@
+{
+  "fix": "FIX-001",
+  "changed_production_lines": [
+    93,
+    98
+  ],
+  "original_targeted_compile_exit": 1,
+  "fixed_targeted_compile_exit": 0,
+  "compiler": "kotlinc-jvm 1.9.0, experimental K2 language version 2.0, JVM target 17",
+  "external_api_type_stubs": [
+    "Context",
+    "SessionVault",
+    "YoutubeDL",
+    "FFmpeg"
+  ],
+  "subprocess_checks_passed": 10,
+  "core_assertions_passed": 76,
+  "android_full_build": false,
+  "live_platform_tests": false,
+  "source_sha256": "f4d79033c242322202fbaf777da70f676115d03f2129b3ff730946d67116c0e5"
+}

@@ -1,0 +1,390 @@
+{
+  "scope": "source/resource/payload integrity, no Android rendering",
+  "checks": [
+    {
+      "name": "applicationId retained",
+      "passed": true
+    },
+    {
+      "name": "dependency block byte-for-byte unchanged",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/engine/MediaRuntime.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/auth/BiliAuth.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/data/TaskStore.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/auth/SessionVault.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/ui/GlassSurface.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/ui/LiquidControls.kt",
+      "passed": true
+    },
+    {
+      "name": "preserved app/src/main/java/com/luma/downloader/download/DeleteWorker.kt",
+      "passed": true
+    },
+    {
+      "name": "core unchanged Extractors.kt",
+      "passed": true
+    },
+    {
+      "name": "core unchanged Json.kt",
+      "passed": true
+    },
+    {
+      "name": "core unchanged Model.kt",
+      "passed": true
+    },
+    {
+      "name": "core unchanged Network.kt",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_tiktok.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_x.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_xiaohongshu.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_douyin.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_bilibili.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_youtube.png",
+      "passed": true
+    },
+    {
+      "name": "platform artwork unchanged platform_kuaishou.png",
+      "passed": true
+    },
+    {
+      "name": "launcher uses new adaptive resource",
+      "passed": true
+    },
+    {
+      "name": "display name exactly matches selected concept",
+      "passed": true
+    },
+    {
+      "name": "legacy FileProvider roots retained",
+      "passed": true
+    },
+    {
+      "name": "new FileProvider roots present",
+      "passed": true
+    },
+    {
+      "name": "all PNG resources decode",
+      "passed": true
+    },
+    {
+      "name": "legacy density mdpi",
+      "passed": true
+    },
+    {
+      "name": "legacy density hdpi",
+      "passed": true
+    },
+    {
+      "name": "legacy density xhdpi",
+      "passed": true
+    },
+    {
+      "name": "legacy density xxhdpi",
+      "passed": true
+    },
+    {
+      "name": "legacy density xxxhdpi",
+      "passed": true
+    },
+    {
+      "name": "foreground is 432x432 RGBA",
+      "passed": true
+    },
+    {
+      "name": "v26 adaptive icon has no unsupported monochrome element",
+      "passed": true
+    },
+    {
+      "name": "v33 provides monochrome layer",
+      "passed": true
+    },
+    {
+      "name": "single menu Surface",
+      "passed": true
+    },
+    {
+      "name": "menu rows do not create white Surface/Card",
+      "passed": true
+    },
+    {
+      "name": "menu uses grouped alpha compositing",
+      "passed": true
+    },
+    {
+      "name": "closing menu blocks second submission",
+      "passed": true
+    },
+    {
+      "name": "all choice call sites use unified item",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/build.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/build.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/AndroidManifest.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/AndroidManifest.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/auth/SessionMaintenanceWorker.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/auth/SessionMaintenanceWorker.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/data/MenuPolicy.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/data/MenuPolicy.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/data/UiSettings.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/data/UiSettings.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/download/MediaPublisher.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/download/MediaPublisher.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/ui/AccountScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/ui/AccountScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/ui/ParseScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/ui/ParseScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/ui/SettingsScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/ui/SettingsScreen.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/ui/ShiliuApp.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/ui/ShiliuApp.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/java/com/luma/downloader/ui/SpringDropdownMenu.kt",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/java/com/luma/downloader/ui/SpringDropdownMenu.kt",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable/ic_jingliu_background.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable/ic_jingliu_background.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable/ic_jingliu_foreground.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable/ic_jingliu_foreground.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable/ic_jingliu_monochrome.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable/ic_jingliu_monochrome.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable-nodpi/jingliu_icon_foreground.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable-nodpi/jingliu_icon_foreground.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/drawable-nodpi/jingliu_icon_legacy.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/drawable-nodpi/jingliu_icon_legacy.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/values/strings.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/values/strings.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash app/src/main/res/xml/file_paths.xml",
+      "passed": true
+    },
+    {
+      "name": "payload before hash app/src/main/res/xml/file_paths.xml",
+      "passed": true
+    },
+    {
+      "name": "payload after hash settings.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "payload before hash settings.gradle.kts",
+      "passed": true
+    },
+    {
+      "name": "payload has exactly listed files",
+      "passed": true
+    },
+    {
+      "name": "no source files removed",
+      "passed": true
+    },
+    {
+      "name": "relative doc link docs/FIX-002-menu-brand.md",
+      "passed": true
+    },
+    {
+      "name": "relative doc link docs/README-original.md",
+      "passed": true
+    }
+  ],
+  "passed": 96
+}

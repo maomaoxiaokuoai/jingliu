@@ -1,0 +1,155 @@
+{
+  "base_file": "Jingliu-Android-0.7.4-完整源码.zip",
+  "base_sha256": "46f30145a1c74a10b6a6e57e7d28c3d62baca454d927b287c5062ae4db11bfcb",
+  "base_manifest_verified": true,
+  "overlay_count": 24,
+  "overlay_production_files": 22,
+  "changes": [
+    {
+      "path": "app/build.gradle.kts",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "2fdc0e70a393ee956e2321eef06bd23e0ca9b387dca3ed0ae976a405323af382",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "9dc24204cd1f574bdbccb4ba00e92418a8a930f72af7ba55e33af08abacd25b8",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/MainActivity.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "97d96ee62167ba3411b3194231cd7667ea6c7ec3b3ace622b88347e84c4303a3",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/auth/LoginHandoffLauncher.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "98525ae95471274a7f5d77649a47e40dbbb602b9970d17bc4dd3a788e707807e",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/auth/LoginHandoffPolicy.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "850eac6e9427a0e833c1d3c8b3bc3da33246df8c21179879533e43bba6dea1c9",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/data/FrameStats.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "b089e82f80e7eec1e3f16af17333892d83b315c39be9d56e77de657b8cfccd1f",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/data/LumaViewModel.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "71397f1d20f5594f86bb40be49b7405caf270a35f34c60b0465660963baf79b6",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/data/ScenePolicy.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "63898e9179f07306a151264bc25b3be299ab85a53e5d47f15c2c39065de9a4c0",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/data/SettingsStore.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "e9c8306497934261c10acbcb75ad2c7212de33bacae9d40c7e47ef1305b14955",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/performance/FrameMonitor.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "f7b43dc5b104fa8d52664cafccfb659b84c7fd41a71eb96a06eca6e9913bab5d",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/AccountScreen.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "836a90526e02e5906d4032e3650bdbf74e17874736bf50c3be4ab5a85795205f",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/DownloadsScreen.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "24a5a7c8a1a386b92101c1cc1a6fb4153dfe2aa47f11142f13784cb159500bb4",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/GlassOverlayHost.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "296c7316e64da04b2556e74631b871931c03b362440b4d1c230670afeac1a638",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/GlassSurface.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "28660775cf6810a92af29ec2a140fa150a2747e56e582aab1bc24c445c5c38e0",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/LiquidControls.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "2c1ea0edaad10c98cdd263e95fa444a9ae001c166f57bce2b1d78cc706d54e4a",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/LoginQrDialog.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "db6bcda5f6f3cbe2e374c469b68498e753eb53040bfb398e9aa276f62be7693a",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/RetainedSceneHost.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "45c2742f96b0657b726196ecb404e1057d31e9b8d356fab93fcbd0b734894e0b",
+      "action": "added"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/SettingsScreen.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "76c1dddadfaafc69ce0a52106a369eb957afe62a433159189ba78641ffc0f8d6",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/ShiliuApp.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "63020049fd93bc1b5438e17263fa96e66eb828d7925c0b3168b228e32cb65a50",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/main/java/com/luma/downloader/ui/UiParts.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "98facd086ab4db22081eeda8d6e531df576278c3c0332f4d0214fc09b80ea89b",
+      "action": "replaced"
+    },
+    {
+      "path": "app/src/profile/AndroidManifest.xml",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "382cc8254a9432d0e4cf272d11bd79227d9020f381fe6726371daec6284816da",
+      "action": "added"
+    },
+    {
+      "path": "core/src/main/kotlin/com/luma/core/Network.kt",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "de32b42890c0c37f182a407ac06f7ee235b1d8b878a475efd63c3363e3853940",
+      "action": "replaced"
+    },
+    {
+      "path": "tests/fix-006/PerformancePolicyChecks.log",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "82e259c6dfb63622952627c99d4f192c3685e4a3f4e254270d19120c60ca6ea6",
+      "action": "added"
+    },
+    {
+      "path": "tests/fix-006/syntax.log",
+      "source": "previous 0.7.5 mounted attachment",
+      "sha256": "461543de705a30cbea383c506b7ba5042612d73b860184178bc5a04c0ca05877",
+      "action": "added"
+    }
+  ],
+  "assets_unchanged": true,
+  "other_production_sources_unchanged": true
+}

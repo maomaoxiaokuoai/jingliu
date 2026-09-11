@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "date": "2026-09-09",
+    "core_assertions_passed": 76,
+    "policy_assertions_passed": 175,
+    "kotlin_files_syntax_checked": 46,
+    "syntax_errors": 0,
+    "structure_checks_passed": 85,
+    "brand_assets_identical": 7,
+    "android_gradle_build": "blocked before Gradle initialization: DNS lookup failed",
+    "apk_generated": false,
+    "android_runtime_tested": false,
+    "live_platform_tests": false,
+    "wrapper_jar_included": false,
+    "wrapper_bootstrap": "official URLs, pinned SHA256 verification",
+    "scope": "source-only delivery; no claim of zero bugs or all-platform compatibility"
+  },
+  "current_menu_brand_patch": {
+    "name": "镜流",
+    "english_name": "GlassFlow",
+    "version": "0.7.1-menu-fix",
+    "application_id": "com.luma.downloader",
+    "base_archive": "Shiliu-Android-完整源码-编译修复1.zip",
+    "checks": {
+      "menu_named_checks": 16,
+      "menu_geometry_fuzz_cases_within_one_check": 10000,
+      "policy_assertions": 175,
+      "core_assertions": 76,
+      "kotlin_files_grammar_only": 50,
+      "grammar_errors": 0
+    },
+    "android_build": "not performed; no Android SDK and dependency host DNS unavailable",
+    "android_instrumentation_tests": {
+      "supplied": 5,
+      "executed": 0
+    },
+    "apk_generated": false,
+    "menus": "single opaque frosted appearance; not live cross-window backdrop blur",
+    "windows_patcher_executed": false,
+    "launch_preview": "asset mask simulation, not device screenshot",
+    "unchanged": [
+      "applicationId",
+      "namespace",
+      "database schema",
+      "Keystore aliases",
+      "core parsing/transfer source",
+      "MediaRuntime FIX-001",
+      "Haze GlassSurface",
+      "platform icon files"
+    ]
+  }
+}

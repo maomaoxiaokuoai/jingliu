@@ -1,0 +1,7 @@
+{
+  "base_sha256": "04bb74685af76610cddad639411dca3faaa67cb87177cb0a8704d666305e96fd",
+  "brand_and_android_resources_verified_identical": 28,
+  "missing_expected_files": [],
+  "secret_or_local_binary_inputs_included": false,
+  "checks_scope": "Source/archive completeness only; NOT Android full compilation"
+}

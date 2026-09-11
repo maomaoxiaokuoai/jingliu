@@ -1,0 +1,90 @@
+{
+  "scope": "Source contracts and compiled JVM bytecode, NOT Gradle model resolution/Android/device verification.",
+  "checks": [
+    {
+      "check": "server inclusion is explicit opt-in",
+      "passed": true
+    },
+    {
+      "check": "default Android modules remain app and core",
+      "passed": true
+    },
+    {
+      "check": "no mandatory exact JDK17 search in bridge",
+      "passed": true
+    },
+    {
+      "check": "bridge Java compile release is 17",
+      "passed": true
+    },
+    {
+      "check": "bridge Kotlin bytecode target is 17",
+      "passed": true
+    },
+    {
+      "check": "core release and Kotlin target agree",
+      "passed": true
+    },
+    {
+      "check": "Android app does not depend on optional server",
+      "passed": true
+    },
+    {
+      "check": "QR dialog allows screenshots explicitly",
+      "passed": true
+    },
+    {
+      "check": "Cookie editor remains protected",
+      "passed": true
+    },
+    {
+      "check": "does not globally clear secure flag",
+      "passed": true
+    },
+    {
+      "check": "only raw code is rendered/exportable",
+      "passed": true
+    },
+    {
+      "check": "official page not converted into a made-up QR",
+      "passed": true
+    },
+    {
+      "check": "user confirms gallery export",
+      "passed": true
+    },
+    {
+      "check": "save writes PNG with pending publication",
+      "passed": true
+    },
+    {
+      "check": "save checks cancellation and live guard",
+      "passed": true
+    },
+    {
+      "check": "save cleans its created URI on failure",
+      "passed": true
+    },
+    {
+      "check": "no broad gallery permission added",
+      "passed": true
+    },
+    {
+      "check": "native launch described as launch only",
+      "passed": true
+    },
+    {
+      "check": "identity authorization is not called Cookie login",
+      "passed": true
+    },
+    {
+      "check": "no actual private bridge properties included",
+      "passed": true
+    },
+    {
+      "check": "actual compiled application/test bytecode is Java17 (61)",
+      "passed": true
+    }
+  ],
+  "compiled_luma_classes": 232
+}

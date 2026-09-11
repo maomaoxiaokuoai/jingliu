@@ -1,0 +1,17 @@
+{
+  "version": "0.8.0",
+  "path": "app/src/main/java/com/luma/downloader/auth/EmbeddedLoginActivity.kt",
+  "before_sha256": "b7b687656ad98f4a6a848231773298e069996efc0f99069ea71acc90d7798e78",
+  "after_sha256": "abf4af092af0efbecf418c617854873c669d9bb769f5fc163f9fa9925752ed89",
+  "property_occurrences_renamed": 5,
+  "lines_changed": 4,
+  "baseline_typecheck_exit": 1,
+  "fixed_typecheck_exit": 0,
+  "property_state_exit": 0,
+  "typecheck": "actual production Activity with signature-aware external type substitutes",
+  "compiler": "kotlinc-jvm 1.9.0",
+  "runtime": "OpenJDK 21",
+  "target": "Java 17",
+  "android_build_executed": false,
+  "apk_generated": false
+}

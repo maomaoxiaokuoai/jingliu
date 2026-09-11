@@ -1,0 +1,36 @@
+{
+  "version": "0.8.0-browser-session",
+  "version_code": 17,
+  "host_checks": {
+    "browser_session": 41,
+    "core_assertions": 76,
+    "cookie_import": 35,
+    "qr_access": 27,
+    "source_contracts": 18
+  },
+  "ui_partial_compile": {
+    "passed": true,
+    "uses_external_android_compose_type_substitutes": true,
+    "not_android_gradle": true
+  },
+  "android_build": {
+    "attempted": true,
+    "passed": false,
+    "wrapper_stage_only": true,
+    "blocker": "official dependency host DNS resolution failed",
+    "exit": "1"
+  },
+  "apk_produced": false,
+  "real_webview_tested": false,
+  "real_platform_login_tested": false,
+  "kuaishou_load_time_measured": false,
+  "douyin_live_self_probe_tested": false,
+  "format_guard": "no claims of permanent Cookie validity; unknown and unavailable remain separate",
+  "environment": {
+    "kotlin": "host 1.9.0, not Android project 2.1.20",
+    "java": "openjdk version \"21.0.11\" 2026-04-21",
+    "target": "17",
+    "android_sdk_present": false
+  },
+  "test_boundary": "Android Context/Keystore declarations are type substitutes for host AES/file tests; JVM AES provider is real. No platform connections."
+}

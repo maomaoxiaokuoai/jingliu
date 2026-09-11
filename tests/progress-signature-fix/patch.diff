@@ -1,0 +1,38 @@
+--- a/app/src/main/java/com/luma/downloader/auth/EmbeddedLoginActivity.kt
++++ b/app/src/main/java/com/luma/downloader/auth/EmbeddedLoginActivity.kt
+@@ -52,7 +52,7 @@
+     private var ready by mutableStateOf(false)
+     private var pageVisible by mutableStateOf(false)
+     private var busy by mutableStateOf(false)
+-    private var progress by mutableIntStateOf(0)
++    private var pageLoadProgress by mutableIntStateOf(0)
+     private var autoSave by mutableStateOf(true)
+     private var desktop by mutableStateOf(true)
+     private var lightweight by mutableStateOf(false)
+@@ -155,7 +155,7 @@
+                     }
+                 ) { padding ->
+                     Column(Modifier.padding(padding).fillMaxSize()) {
+-                        if (progress in 1..99) LinearProgressIndicator(progress = { progress / 100f }, modifier = Modifier.fillMaxWidth())
++                        if (pageLoadProgress in 1..99) LinearProgressIndicator(progress = { pageLoadProgress / 100f }, modifier = Modifier.fillMaxWidth())
+                         AndroidView<WebView>(
+                             factory = { _ -> createBrowser().also { browser = it; prepare(it) } },
+                             modifier = Modifier.weight(1f).fillMaxWidth()
+@@ -197,7 +197,7 @@
+                 return true
+             }
+             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+-                pageVisible = false; progress = 0; openAt = SystemClock.elapsedRealtime()
++                pageVisible = false; pageLoadProgress = 0; openAt = SystemClock.elapsedRealtime()
+                 if (BrowserSessionPolicy.allowed(platform, url)) { current = url; addVisited(url); status = "正在加载官方页面" }
+             }
+             override fun onPageCommitVisible(view: WebView, url: String) { visible(url) }
+@@ -213,7 +213,7 @@
+             }
+         }
+         view.webChromeClient = object : WebChromeClient() {
+-            override fun onProgressChanged(view: WebView, value: Int) { progress = value.coerceIn(0, 100) }
++            override fun onProgressChanged(view: WebView, value: Int) { pageLoadProgress = value.coerceIn(0, 100) }
+         }
+         view.setDownloadListener { _, _, _, _, _ -> status = "请返回解析页下载文件" }
+         return view

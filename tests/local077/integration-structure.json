@@ -1,0 +1,78 @@
+{
+  "scope": "static integration constraints, not build/runtime verification",
+  "checks": [
+    {
+      "name": "download modal has quality controls, no engine chooser",
+      "passed": true
+    },
+    {
+      "name": "no download-time engine setter remains",
+      "passed": true
+    },
+    {
+      "name": "batch engine frozen from parsed choice",
+      "passed": true
+    },
+    {
+      "name": "normal task uses parsed engine not latest setting",
+      "passed": true
+    },
+    {
+      "name": "parser selection remains available before parsing",
+      "passed": true
+    },
+    {
+      "name": "remote credential endpoint removed from active app code",
+      "passed": true
+    },
+    {
+      "name": "explicit local engine routes to local client",
+      "passed": true
+    },
+    {
+      "name": "Bili specialization honestly labelled",
+      "passed": true
+    },
+    {
+      "name": "upstream pinned in build inputs",
+      "passed": true
+    },
+    {
+      "name": "Chaquopy version and Python declared",
+      "passed": true
+    },
+    {
+      "name": "Android Python source included",
+      "passed": true
+    },
+    {
+      "name": "real upstream imports and parser invocation exist",
+      "passed": true
+    },
+    {
+      "name": "no web server or runtime installer in Python adapter",
+      "passed": true
+    },
+    {
+      "name": "library self test is not marked as network verification",
+      "passed": true
+    },
+    {
+      "name": "private same-UID service process, not exported",
+      "passed": true
+    },
+    {
+      "name": "Python starts only in background bound component",
+      "passed": true
+    },
+    {
+      "name": "bounded serialization queue and IPC limits",
+      "passed": true
+    },
+    {
+      "name": "existing manifest transport used with remux",
+      "passed": true
+    }
+  ],
+  "passed": 18
+}

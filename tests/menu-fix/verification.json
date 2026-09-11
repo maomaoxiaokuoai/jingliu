@@ -1,0 +1,36 @@
+{
+  "name": "镜流",
+  "english_name": "GlassFlow",
+  "version": "0.7.1-menu-fix",
+  "application_id": "com.luma.downloader",
+  "base_archive": "Shiliu-Android-完整源码-编译修复1.zip",
+  "checks": {
+    "menu_named_checks": 16,
+    "menu_geometry_fuzz_cases_within_one_check": 10000,
+    "policy_assertions": 175,
+    "core_assertions": 76,
+    "kotlin_files_grammar_only": 50,
+    "grammar_errors": 0,
+    "structural_checks": 92,
+    "source_resource_payload_integrity_checks": 96
+  },
+  "android_build": "not performed; no Android SDK and dependency host DNS unavailable",
+  "android_instrumentation_tests": {
+    "supplied": 5,
+    "executed": 0
+  },
+  "apk_generated": false,
+  "menus": "single opaque frosted appearance; not live cross-window backdrop blur",
+  "windows_patcher_executed": false,
+  "launch_preview": "asset mask simulation, not device screenshot",
+  "unchanged": [
+    "applicationId",
+    "namespace",
+    "database schema",
+    "Keystore aliases",
+    "core parsing/transfer source",
+    "MediaRuntime FIX-001",
+    "Haze GlassSurface",
+    "platform icon files"
+  ]
+}

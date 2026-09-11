@@ -1,0 +1,4 @@
+# Optional when Chaquopy cannot automatically find Python 3.11 on the build computer.
+# Copy this file to python-build.properties, and point to YOUR Python 3.11 interpreter.
+# Use forward slashes in Windows properties files. Do not include surrounding quotation marks.
+buildPython=C:/Users/your-user/AppData/Local/Programs/Python/Python311/python.exe
