@@ -1,3 +1,4 @@
+import com.android.build.gradle.api.ApkVariantOutput
 import java.util.Properties
 
 plugins {
@@ -36,8 +37,8 @@ android {
         targetSdk = 35
         buildConfigField("String", "QR_AUTH_BRIDGE_URL", "\"$qrBridge\"")
         buildConfigField("boolean", "FRAME_METRICS_ENABLED", "false")
-        versionCode = 18
-        versionName = "0.8.1-liquid-optics"
+        versionCode = 19
+        versionName = "0.8.2-split-apks"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64", "x86") }
     }
@@ -50,6 +51,17 @@ android {
     packaging {
         jniLibs { useLegacyPackaging = true }
         resources { excludes += setOf("META-INF/DEPENDENCIES", "META-INF/LICENSE*", "META-INF/NOTICE*") }
+    }
+    // Per-ABI APK splits: each APK ships native libs (Chaquopy Python, ffmpeg,
+    // lxml/aiohttp wheels) for one ABI only, so downloads stay small.
+    // Universal APK is kept for devices with an unknown ABI and for emulators.
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a", "x86_64", "x86")
+            isUniversalApk = true
+        }
     }
     signingConfigs {
         create("release") {
@@ -74,6 +86,15 @@ android {
             signingConfig = signingConfigs.getByName("debug") // local testing only; not a production signing key
             matchingFallbacks += listOf("release")
             buildConfigField("boolean", "FRAME_METRICS_ENABLED", "true")
+        }
+    }
+    // Distinct versionCode per split APK (universal keeps the base code).
+    // Higher code wins on capable devices, so each device prefers its own ABI split.
+    applicationVariants.all {
+        outputs.map { it as ApkVariantOutput }.forEach { output ->
+            val abi = output.getFilter("ABI") ?: return@forEach
+            val abiCode = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" to 3, "x86_64" to 4)[abi] ?: 0
+            output.versionCode.set(output.versionCode.get() * 10 + abiCode)
         }
     }
 }

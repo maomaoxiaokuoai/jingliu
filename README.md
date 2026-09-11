@@ -75,8 +75,8 @@ Gradle 8.11.1、AGP 8.9.2、Kotlin 2.1.20、Compose BOM 2025.06.01、WebKit 1.12
 
 ## 6. GitHub Actions 在线编译 APK
 
-本完整源码已包含 `.github/workflows/build-apk.yml`。工作流固定使用 JDK 17、Python 3.11、Android SDK 35、Build Tools 35.0.0 和 Gradle 8.11.1，编译 Debug APK并上传为 GitHub Artifact。
+本完整源码已包含 `.github/workflows/build-apk.yml`。工作流固定使用 JDK 17、Python 3.11、Android SDK 35、Build Tools 35.0.0 和 Gradle 8.11.1，一次编译出 5 个 Debug 分包（`arm64-v8a` / `armeabi-v7a` / `x86_64` / `x86` / `universal`，各架构包体积更小）并上传为 GitHub Artifact。真机优先装 `arm64-v8a`，不知道机型装 `universal`。
 
-打 Tag 自动发 Release（Debug + Release 双 APK）见 [发版流程](docs/RELEASE-FLOW.md)：`git tag v0.8.2-liquid-optics; git push origin v0.8.2-liquid-optics`。
+打 Tag 自动发 Release（Debug + Release 共 10 个分包）见 [发版流程](docs/RELEASE-FLOW.md)：`git tag v0.8.2-split-apks; git push origin v0.8.2-split-apks`。
 
 **GitHub 不会自动解压你提交到仓库里的 ZIP 文件。** 请先解压，再把 `Jingliu-Android` 目录内部的 `.github`、`app`、`core`、Gradle 文件等提交到仓库根目录。具体上传、手动运行、下载 APK 和可选稳定 Debug 签名方法见 [GitHub Actions 编译说明](docs/GITHUB-ACTIONS-BUILD.md)。

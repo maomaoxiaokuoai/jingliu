@@ -126,25 +126,40 @@ jobs:
             :core:test \
             :app:testDebugUnitTest 2>&1 | tee build-logs/unit-tests.log
 
-      - name: Prepare downloadable APK
+      - name: Prepare downloadable APKs
         if: success()
         shell: bash
         run: |
           set -euo pipefail
-          apk="app/build/outputs/apk/debug/app-debug.apk"
-          test -s "$apk"
           mkdir -p artifacts
-          output="artifacts/Jingliu-debug-${GITHUB_RUN_NUMBER}.apk"
-          cp "$apk" "$output"
-          sha256sum "$output" > "${output}.sha256"
+          # ABI splits produce one APK per ABI plus a universal APK, e.g.
+          # app-arm64-v8a-debug.apk, app-universal-debug.apk.
+          shopt -s nullglob
+          apks=(app/build/outputs/apk/debug/*.apk)
+          if [ "${#apks[@]}" -lt 5 ]; then
+            echo "Expected at least 5 split APKs, found ${#apks[@]}:"
+            ls -lh app/build/outputs/apk/debug/ || true
+            exit 1
+          fi
+          for apk in "${apks[@]}"; do
+            test -s "$apk"
+            base="$(basename "$apk" .apk)"
+            # app-arm64-v8a-debug -> arm64-v8a, app-universal-debug -> universal
+            abi="${base#app-}"
+            abi="${abi%-debug}"
+            output="artifacts/Jingliu-debug-${abi}-${GITHUB_RUN_NUMBER}.apk"
+            cp "$apk" "$output"
+          done
+          (cd artifacts && sha256sum ./*.apk > SHA256SUMS.txt)
           {
             echo "commit=${GITHUB_SHA}"
             echo "run_number=${GITHUB_RUN_NUMBER}"
             echo "java=$(java -version 2>&1 | head -n 1)"
             echo "python=$(python --version 2>&1)"
             echo "gradle=$(gradle --version | awk '/^Gradle / { print $2; exit }')"
-            echo "apk_sha256=$(sha256sum "$output" | awk '{print $1}')"
+            ls -l artifacts/*.apk | awk '{print "apk_"$9"="$5"bytes"}'
           } > artifacts/build-info.txt
+          ls -lh artifacts/
 
       - name: Upload APK
         if: success()

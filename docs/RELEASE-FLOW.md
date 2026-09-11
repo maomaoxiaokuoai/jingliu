@@ -4,11 +4,25 @@
 
 ## 1. 两种工作流分工
 
-- `.github/workflows/build-apk.yml`：`push main` / PR / 手动 → 编译 Debug APK → 上传 Artifact（`Jingliu-debug-apk-*`），不创建 Release。
-- `.github/workflows/release.yml`：`push tag v*` → 同时编译 Debug + Release → 自动创建 GitHub Release 并挂附件：
-  - `Jingliu-<tag>-debug.apk`（测试 / 稳定 debug 签名）
-  - `Jingliu-<tag>-release.apk`（分发 / 正式签名，有则用正式，无则 debug 兜底并在日志警告）
+- `.github/workflows/build-apk.yml`：`push main` / PR / 手动 → 编译 Debug 分包 APK → 上传 Artifact（`Jingliu-debug-apk-*`），不创建 Release。
+- `.github/workflows/release.yml`：`push tag v*` → 同时编译 Debug + Release 分包 → 自动创建 GitHub Release 并挂附件：
+  - `Jingliu-<tag>-<abi>-debug.apk`（测试 / 稳定 debug 签名）
+  - `Jingliu-<tag>-<abi>-release.apk`（分发 / 正式签名，有则用正式，无则 debug 兜底并在日志警告）
   - `SHA256SUMS.txt`、`build-info.txt`
+
+## 2. 用户该下哪个包（ABI 对照）
+
+每个构建一次产出 5 个包（Debug/Release 各 5，共 10 个附件）：
+
+| 文件中的 `<abi>` | 给谁用 |
+|---|---|
+| `arm64-v8a` | 绝大多数真机，优先下这个，体积最小 |
+| `armeabi-v7a` | 老 32 位手机 |
+| `x86_64` | 电脑模拟器 |
+| `x86` | 老 32 位模拟器 |
+| `universal` | 不知道自己机型的直接装这个（体积最大，通吃） |
+
+分包原理：每个包只含一个架构的 native 库（Chaquopy Python 运行库、ffmpeg、`lxml/aiohttp` 原生部分），`universal` 含全部 4 个架构。分包 versionCode = `versionCode*10+abi码`（universal 保持原值），各包版本码唯一。
 
 ## 2. 一次性配置 Secrets
 
@@ -50,19 +64,19 @@ $env:ANDROID_KEY_PASSWORD="***"
 ## 3. 每次发版操作
 
 1. 改 `app/build.gradle.kts`：`versionCode +1`，`versionName` 与 Tag 去掉 `v` 后一致。
-   例：Tag `v0.8.2-liquid-optics` → `versionCode = 19`，`versionName = "0.8.2-liquid-optics"`。
+   例：Tag `v0.8.2-split-apks` → `versionCode = 19`，`versionName = "0.8.2-split-apks"`。
 2. 提交并推送到 `main`：
    ```powershell
    git add app/build.gradle.kts
-   git commit -m "Release v0.8.2-liquid-optics"
+   git commit -m "Release v0.8.2-split-apks"
    git push origin main
    ```
 3. 打 Tag 并推送（即触发构建）：
    ```powershell
-   git tag v0.8.2-liquid-optics
-   git push origin v0.8.2-liquid-optics
+   git tag v0.8.2-split-apks
+   git push origin v0.8.2-split-apks
    ```
-4. 去 `Actions → Release Jingliu APK` 看绿勾，再去 `Releases` 下载双 APK。
+4. 去 `Actions → Release Jingliu APK` 看绿勾，再去 `Releases` 按上面的 ABI 表下载对应的包。
 5. 手动触发（不打 Tag 只验证）：`Actions → Release Jingliu APK → Run workflow`，产物在 Artifact，不会创建 Release。
 
 ## 4. 注意事项

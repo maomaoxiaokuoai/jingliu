@@ -166,13 +166,31 @@ jobs:
             tag="manual-${GITHUB_RUN_NUMBER}"
           fi
           echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
-          debug_apk="app/build/outputs/apk/debug/app-debug.apk"
-          release_apk="app/build/outputs/apk/release/app-release.apk"
-          test -s "$debug_apk"
-          test -s "$release_apk"
           mkdir -p artifacts
-          cp "$debug_apk" "artifacts/Jingliu-${tag}-debug.apk"
-          cp "$release_apk" "artifacts/Jingliu-${tag}-release.apk"
+          # ABI splits produce one APK per ABI plus a universal APK, e.g.
+          # app-arm64-v8a-release.apk, app-universal-release.apk.
+          shopt -s nullglob
+          debug_apks=(app/build/outputs/apk/debug/*.apk)
+          release_apks=(app/build/outputs/apk/release/*.apk)
+          if [ "${#debug_apks[@]}" -lt 5 ] || [ "${#release_apks[@]}" -lt 5 ]; then
+            echo "Expected at least 5 debug and 5 release APKs, found ${#debug_apks[@]}/${#release_apks[@]}:"
+            ls -lh app/build/outputs/apk/debug/ app/build/outputs/apk/release/ || true
+            exit 1
+          fi
+          for apk in "${debug_apks[@]}"; do
+            test -s "$apk"
+            base="$(basename "$apk" .apk)"
+            abi="${base#app-}"
+            abi="${abi%-debug}"
+            cp "$apk" "artifacts/Jingliu-${tag}-${abi}-debug.apk"
+          done
+          for apk in "${release_apks[@]}"; do
+            test -s "$apk"
+            base="$(basename "$apk" .apk)"
+            abi="${base#app-}"
+            abi="${abi%-release}"
+            cp "$apk" "artifacts/Jingliu-${tag}-${abi}-release.apk"
+          done
           (cd artifacts && sha256sum ./*.apk > SHA256SUMS.txt)
           {
             echo "tag=$tag"
@@ -186,8 +204,7 @@ jobs:
             else
               echo "release_signing=debug-fallback"
             fi
-            echo "debug_sha256=$(sha256sum artifacts/Jingliu-${tag}-debug.apk | awk '{print $1}')"
-            echo "release_sha256=$(sha256sum artifacts/Jingliu-${tag}-release.apk | awk '{print $1}')"
+            ls -l artifacts/*.apk | awk '{print "apk_"$9"="$5"bytes"}'
           } > artifacts/build-info.txt
           ls -lh artifacts/
 
@@ -200,8 +217,7 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            artifacts/Jingliu-${{ github.ref_name }}-debug.apk
-            artifacts/Jingliu-${{ github.ref_name }}-release.apk
+            artifacts/*.apk
             artifacts/SHA256SUMS.txt
             artifacts/build-info.txt
 

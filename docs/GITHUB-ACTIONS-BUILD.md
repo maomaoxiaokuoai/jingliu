@@ -43,7 +43,7 @@ git push -u origin main
 Jingliu-debug-apk-运行编号
 ```
 
-解压 GitHub 下载的 Artifact 后可看到 APK、SHA-256 文件和 `build-info.txt`。
+解压 GitHub 下载的 Artifact 后可看到 5 个分包 APK（`Jingliu-debug-arm64-v8a-*` 等）、`SHA256SUMS.txt` 和 `build-info.txt`。真机优先装 `arm64-v8a`，机型不明装 `universal`。
 
 ## 为什么工作流不依赖 gradle-wrapper.jar
 
