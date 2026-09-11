@@ -1,15 +1,11 @@
-# Android Python 3.11 build-time inputs. No web/cli/mcp extras and no server process.
-# Real upstream source (same commit as 0.7.6). Network needed on the BUILD COMPUTER only.
+# Python dependencies embedded into the Android APK by Chaquopy during GitHub Actions.
 parse-video-py @ https://github.com/wujunwei928/parse-video-py/archive/5fcf87256edb5ffcdebf0e4aac2a5a41745da76e.zip
 httpx==0.28.1
 fake-useragent==2.2.0
 parsel==1.10.0
 jmespath==1.0.1
-# Known cp311 Android wheel family. Do not replace these with desktop .so/wheels.
 lxml==5.3.0
 PyYAML==6.0.3
-# aiohttp is declared by upstream. This compatibility set preserves all four ABIs.
-# Our adapter's networking uses HTTPX, not an aiohttp server. Not a security certification.
 aiohttp==3.9.1
 yarl==1.9.3
 multidict==5.1.0

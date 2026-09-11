@@ -1,3 +1,0 @@
-# Optional. Copy to qr-auth.properties after deploying YOUR own auth-bridge.
-# No client secrets in this file or APK. Leave empty to keep only Bili QR ready.
-bridgeUrl=

@@ -1,3 +1,0 @@
-mnt/data/Shiliu-Source/core/src/main/kotlin/com/luma/core/Network.kt:101:112: warning: condition 'it!=null' is always 'true'
-            return HttpText(c.url.toString(),buffer.toString("UTF-8"),c.responseCode,c.headerFields.filterKeys{it!=null})
-                                                                                                               ^
