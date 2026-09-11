@@ -171,11 +171,20 @@ jobs:
             abi="${abi%-release}"
             cp "$apk" "artifacts/Jingliu-${tag}-${abi}.apk"
           done
-          # Invisible one-character placeholder (U+200B zero-width space) for the
-          # release notes. The notes area must stay non-empty, otherwise GitHub
-          # falls back to showing the tagged commit's subject; HTML comments and
-          # whitespace get rendered/trimmed visibly, a zero-width space does not.
-          printf '\u200b' > release-notes.txt
+          # Auto-generated release notes: version follows the tag (v0.8.2 -> 0.8.2),
+          # file names use the tag verbatim. No per-release maintenance needed.
+          # The notes must stay non-empty, otherwise GitHub falls back to showing
+          # the tagged commit's subject in the notes area.
+          ver="${tag#v}"
+          {
+            echo "Jingliu ${ver}"
+            echo ""
+            echo "Jingliu-${tag}-arm64-v8a.apk：绝大多数手机，优先下载"
+            echo "Jingliu-${tag}-armeabi-v7a.apk：老旧 32 位手机"
+            echo "Jingliu-${tag}-x86_64.apk：模拟器"
+            echo "Jingliu-${tag}-x86.apk：老旧 32 位模拟器"
+            echo "Jingliu-${tag}-universal.apk：不知道机型下这个通用包"
+          } > release-notes.txt
           ls -lh artifacts/
 
       - name: Publish GitHub Release
@@ -185,7 +194,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Jingliu ${{ github.ref_name }}
           generate_release_notes: false
-          # Keep the notes area visually empty (see release-notes.txt above).
+          # Release notes are auto-generated above (version + device guide).
           body_path: release-notes.txt
           fail_on_unmatched_files: true
           files: |
