@@ -180,6 +180,10 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Jingliu ${{ github.ref_name }}
           generate_release_notes: false
+          # Keep the notes area visually empty. GitHub renders the tagged
+          # commit's subject when the body is empty, so use an invisible
+          # HTML comment as a non-empty placeholder instead.
+          body: "<!-- no release notes -->"
           fail_on_unmatched_files: true
           files: |
             artifacts/*.apk
