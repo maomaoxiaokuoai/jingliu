@@ -2,15 +2,16 @@ name: Release Jingliu APK
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+    tags: ["v*"]
+    paths: ["VERSION"]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: jingliu-release-${{ github.ref }}
+  group: jingliu-release-${{ github.repository }}
   cancel-in-progress: false
 
 env:
@@ -20,15 +21,40 @@ env:
 
 jobs:
   build-and-release:
-    name: Build and publish release APKs
+    name: Test, build and publish release APKs
     runs-on: ubuntu-latest
     timeout-minutes: 90
-
+    permissions:
+      contents: write
     steps:
-      - name: Checkout source
+      - name: Checkout exact source
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
+      - name: Validate version and immutable release target
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(tr -d '\r\n' < VERSION)"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]] || { echo "Invalid VERSION"; exit 1; }
+          release_tag="v${version}"
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            [[ "$GITHUB_REF_NAME" == "$release_tag" ]] || { echo "Tag and VERSION disagree"; exit 1; }
+          elif [[ "$GITHUB_REF" != refs/heads/main ]]; then
+            echo "Publish only from main or an explicit version tag. Other branches use the debug workflow."
+            exit 1
+          fi
+          commit="$(git rev-parse HEAD)"
+          existing="$(git rev-parse --verify "refs/tags/${release_tag}^{commit}" 2>/dev/null || true)"
+          if [[ -n "$existing" && "$existing" != "$commit" ]]; then
+            echo "This version already belongs to another commit. Increase VERSION; never move its tag."
+            exit 1
+          fi
+          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
+          echo "JINGLIU_VERSION_NAME=$version" >> "$GITHUB_ENV"
+          echo "JINGLIU_VERSION_CODE=$((1000000 + $(git rev-list --count HEAD)))" >> "$GITHUB_ENV"
+          echo "JINGLIU_COMMIT=$commit" >> "$GITHUB_ENV"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v6
@@ -53,7 +79,7 @@ jobs:
           gradle-version: ${{ env.GRADLE_VERSION }}
           cache-provider: basic
 
-      - name: Configure CI build and version
+      - name: Configure CI paths
         shell: bash
         env:
           QR_AUTH_BRIDGE_URL: ${{ vars.QR_AUTH_BRIDGE_URL }}
@@ -66,31 +92,19 @@ jobs:
             printf 'bridgeUrl=%s\n' "$QR_AUTH_BRIDGE_URL" > qr-auth.properties
           fi
 
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            release_tag="$GITHUB_REF_NAME"
-            version_name="${release_tag#v}"
-          else
-            release_tag="manual-${GITHUB_RUN_NUMBER}"
-            version_name="0.0.0-${release_tag}"
-          fi
-          # The old per-ABI scheme reached versionCode 4020. Keep every new APK safely above it.
-          version_code=$((1000000 + $(git rev-list --count HEAD)))
-
-          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
-          echo "JINGLIU_VERSION_NAME=$version_name" >> "$GITHUB_ENV"
-          echo "JINGLIU_VERSION_CODE=$version_code" >> "$GITHUB_ENV"
-
       - name: Restore stable debug signing key when configured
         shell: bash
         env:
           DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
         run: |
           set -euo pipefail
+          echo "SIGNING_NOTE=未配置固定签名时使用本次构建的临时 debug 签名；不能保证覆盖安装旧版。" >> "$GITHUB_ENV"
           if [ -n "${DEBUG_KEYSTORE_BASE64:-}" ]; then
             mkdir -p "$HOME/.android"
             printf '%s' "$DEBUG_KEYSTORE_BASE64" | base64 --decode > "$HOME/.android/debug.keystore"
             chmod 600 "$HOME/.android/debug.keystore"
             keytool -list -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey >/dev/null
+            echo "SIGNING_NOTE=使用仓库配置的固定 debug 签名。APK 构建类型仍为 release。" >> "$GITHUB_ENV"
           fi
 
       - name: Restore release signing key when configured
@@ -110,9 +124,10 @@ jobs:
             chmod 600 "$RUNNER_TEMP/release.keystore"
             keytool -list -keystore "$RUNNER_TEMP/release.keystore" -storepass "$ANDROID_KEYSTORE_PASSWORD" -alias "$ANDROID_KEY_ALIAS" >/dev/null
             echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/release.keystore" >> "$GITHUB_ENV"
+            echo "SIGNING_NOTE=使用仓库配置的 release 签名；覆盖安装仍要求与旧 APK 的签名一致。" >> "$GITHUB_ENV"
           fi
 
-      - name: Build release APKs
+      - name: Run JVM regression tests and build release APKs
         shell: bash
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -120,58 +135,79 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          gradle --no-daemon --stacktrace --console=plain :app:assembleRelease
+          gradle --no-daemon --stacktrace --console=plain :app:testDebugUnitTest :app:assembleRelease
 
-      - name: Prepare release assets
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: Jingliu-tests-${{ github.run_number }}
+          path: |
+            app/build/reports/tests/
+            app/build/test-results/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Verify APKs and prepare release assets
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p artifacts
           shopt -s nullglob
           apks=(app/build/outputs/apk/release/*.apk)
-          if [ "${#apks[@]}" -ne 5 ]; then
-            echo "Expected exactly 5 APKs, found ${#apks[@]}."
-            ls -lh app/build/outputs/apk/release/ || true
-            exit 1
-          fi
-
+          [[ "${#apks[@]}" -eq 5 ]] || { echo "Expected five ABI/universal APKs"; exit 1; }
+          tools="$ANDROID_SDK_ROOT/build-tools/35.0.0"
           for apk in "${apks[@]}"; do
             test -s "$apk"
+            "$tools/apksigner" verify "$apk"
+            badging="$("$tools/aapt" dump badging "$apk")"
+            if grep -q '^application-debuggable' <<< "$badging"; then
+              echo "Refusing to publish a debuggable APK: $apk"
+              exit 1
+            fi
             base="$(basename "$apk" .apk)"
             abi="${base#app-}"
             abi="${abi%-release}"
             cp "$apk" "artifacts/Jingliu-${RELEASE_TAG}-${abi}.apk"
           done
-
+          git archive --format=zip --prefix="Jingliu-${JINGLIU_VERSION_NAME}/" HEAD > "artifacts/Jingliu-${RELEASE_TAG}-source.zip"
           {
-            echo "Jingliu ${JINGLIU_VERSION_NAME}"
+            echo "Version: $JINGLIU_VERSION_NAME"
+            echo "VersionCode: $JINGLIU_VERSION_CODE"
+            echo "Commit: $JINGLIU_COMMIT"
+            echo "Build type: release (non-debuggable)"
+            echo "Signing: $SIGNING_NOTE"
+            echo "Device rendering, gesture feel and 120Hz frame time: not verified by this CI job"
+          } > artifacts/build-info.txt
+          (cd artifacts && sha256sum *.apk *.zip > SHA256SUMS.txt)
+          {
+            if [ -f "release-notes/${JINGLIU_VERSION_NAME}.md" ]; then
+              cat "release-notes/${JINGLIU_VERSION_NAME}.md"
+            else
+              echo "# Jingliu ${JINGLIU_VERSION_NAME}"
+            fi
             echo
             echo "内部 versionCode：${JINGLIU_VERSION_CODE}"
+            echo "源码提交：${JINGLIU_COMMIT}"
             echo
-            echo "Jingliu-${RELEASE_TAG}-arm64-v8a.apk：绝大多数安卓手机，优先下载"
-            echo "Jingliu-${RELEASE_TAG}-armeabi-v7a.apk：老旧 32 位安卓手机"
-            echo "Jingliu-${RELEASE_TAG}-x86_64.apk：64 位安卓模拟器"
-            echo "Jingliu-${RELEASE_TAG}-x86.apk：老旧 32 位安卓模拟器"
-            echo "Jingliu-${RELEASE_TAG}-universal.apk：不清楚架构时使用，文件最大"
+            echo "签名说明：${SIGNING_NOTE}"
+            echo
+            echo "下载选择：arm64-v8a 为常见 64 位手机；armeabi-v7a 为 32 位 ARM；x86_64 / x86 为对应模拟器；universal 包含所有架构。"
+            echo "CI 通过只证明编译、上述纯逻辑测试和 APK 签名检查通过，不代表真机视觉/性能验收。"
           } > release-notes.txt
-          ls -lh artifacts/
 
-      - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Publish preview release only after tests and build succeed
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Jingliu ${{ github.ref_name }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          target_commitish: ${{ env.JINGLIU_COMMIT }}
+          name: Jingliu ${{ env.RELEASE_TAG }}
+          prerelease: true
           generate_release_notes: false
           body_path: release-notes.txt
           fail_on_unmatched_files: true
-          files: artifacts/*.apk
-
-      - name: Upload manual release APKs
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        uses: actions/upload-artifact@v7
-        with:
-          name: Jingliu-release-${{ env.RELEASE_TAG }}
-          path: artifacts/*.apk
-          if-no-files-found: error
-          retention-days: 30
+          files: |
+            artifacts/*.apk
+            artifacts/*.zip
+            artifacts/SHA256SUMS.txt
+            artifacts/build-info.txt
