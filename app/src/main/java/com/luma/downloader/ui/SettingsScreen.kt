@@ -135,7 +135,11 @@ private fun sectionIcon(key: String) = when(key) {
                 color = p.ink, fontSize = if(section == "home") 28.sp else 22.sp, fontWeight = FontWeight.Bold)
         }
         }
-        LazyColumn(state = state, modifier = Modifier.fillMaxSize(),
+        val (topFade, bottomFade) = rememberScrollEdgeAlphas(state)
+        val fadeEnabled = s.enabled("scrollFade") && !s.enabled("reduceTransparency") &&
+            s.text("material") != "solid"
+        LazyColumn(state = state, modifier = Modifier.fillMaxSize()
+            .scrollEdgeFade(fadeEnabled, topFade, bottomFade, p.background),
             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 10.dp, bottom = if(wide) 32.dp else 152.dp),
             verticalArrangement = Arrangement.spacedBy(s.number("groupGap").dp)) {
             if(section == "home") {
@@ -162,9 +166,24 @@ private fun sectionIcon(key: String) = when(key) {
                         Icon(Icons.Outlined.Restore,null); Spacer(Modifier.width(8.dp));Text("恢复液态玻璃默认值")
                     }
                 }
+                // 0.9.1 live preview uses the production renderer so Clear/Regular/Frost
+                // and tinted medium match what buttons/cards/menus actually show.
+                if(section == "glass") item {
+                    GroupCard { Column(Modifier.padding(18.dp)) { GlassMaterialPreview() } }
+                }
+                if(section == "buttons") item {
+                    GroupCard { Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        androidx.compose.material3.Text("有色玻璃介质 · 当前强调色", color = p.muted, fontSize = 12.sp)
+                        TintedMediumPreview()
+                    } }
+                }
                 if(section == "motion") item { GlassTextButton(onClick=vm::defaultMotion) {Text("恢复灵动弹簧默认值")} }
                 val specs = SettingsCatalog.active.filter { it.section == section }
-                item { GroupCard { specs.forEachIndexed { index, spec -> SettingControl(vm, spec); if(index != specs.lastIndex) InsetDivider() } } }
+                // Each module has a bounded material layer. A single offscreen layer containing
+                // dozens of sliders can exceed GPU texture limits and defeat LazyColumn reuse.
+                items(specs, key = { it.key }) { spec ->
+                    GroupCard { SettingControl(vm, spec) }
+                }
                 if(section == "appearance") item {GlassTextButton(onClick={resetConfirm=true}){Text("恢复外观与动效默认配置…")}}
                 if(section == "downloads") item { Note("并发和 Wi-Fi 限制会影响真实下载。任务进入视频、音频、合并、保存各阶段时分别展示进度；未知大小不伪造百分比。") }
                 if(section == "privacy") item { Note("自动维护目前仅用于 B站：需要扫码获取的可用刷新令牌。其他平台在 Cookie 失效后需要重新登录或导入。") }

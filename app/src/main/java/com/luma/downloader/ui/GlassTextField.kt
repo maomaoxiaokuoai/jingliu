@@ -15,8 +15,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.luma.downloader.data.GlassRole
+import com.luma.downloader.data.MotionChannel
 
-/** Real editable text field with native IME/cursor/selection; no outlined Material rectangle. */
+/** Real editable text field with native IME/cursor/selection; no outlined Material rectangle.
+ * 0.9.1: focus drives a smooth glass transition (tint + pressure + touch bulge) via the
+ * shared GlassSurface pipeline. Glyphs stay above the lens and are never warped. */
 @Composable fun GlassTextField(
     value:String, onValueChange:(String)->Unit, placeholder:String,
     modifier:Modifier=Modifier, singleLine:Boolean=false, minLines:Int=1, maxLines:Int=4,
@@ -25,11 +28,21 @@ import com.luma.downloader.data.GlassRole
     visualTransformation:VisualTransformation=VisualTransformation.None,
 ) {
     val p=LocalLumaPalette.current
+    val s=LocalUiSettings.current
+    val mode=LocalAppearance.current.motion
     var focused by remember{mutableStateOf(false)}
     val focus=LocalFocusManager.current
+    val focusPressure by androidx.compose.animation.core.animateFloatAsState(
+        if (focused && mode != com.luma.downloader.data.MotionMode.OFF) 1f else 0f,
+        s.motionSpec(com.luma.downloader.data.MotionChannel.FADE, mode),
+        label = "field-focus",
+    )
     GlassSurface(modifier.fillMaxWidth(),radius=if(singleLine)18.dp else 20.dp,role=GlassRole.FIELD,
-        tint=if(focused)p.accent.copy(alpha=.045f)else Color.Unspecified,
-        fallback=p.group,pressed=if(focused).22f else 0f) {
+        tint=if(focused)p.accent.copy(alpha=.055f)else Color.Unspecified,
+        fallback=p.group,
+        pressProgress = { focusPressure * 0.28f },
+        touchPoint = { androidx.compose.ui.geometry.Offset(0.5f, 0.5f) },
+        touchStrength = { focusPressure * 0.35f }) {
         TextField(value=value,onValueChange=onValueChange,
             modifier=Modifier.fillMaxWidth().onFocusChanged{focused=it.isFocused},
             singleLine=singleLine,minLines=minLines,maxLines=maxLines,visualTransformation=visualTransformation,

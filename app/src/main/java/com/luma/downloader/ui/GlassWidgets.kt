@@ -93,8 +93,33 @@ import com.luma.downloader.ui.optics.*
 @Composable fun GlassFilterChip(selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,
     enabled:Boolean=true,label:@Composable ()->Unit) {
     val p=LocalLumaPalette.current
-    GlassSurface(modifier.heightIn(min=42.dp).selectable(selected,enabled,Role.RadioButton,onClick),
-        radius=21.dp,role=GlassRole.BUTTON,tint=if(selected)p.accent.copy(alpha=.15f) else Color.Unspecified) {
+    val s=LocalUiSettings.current
+    val mode=LocalAppearance.current.motion
+    val source=remember { MutableInteractionSource() }
+    val pressed by source.collectIsPressedAsState()
+    val pressAmt by animateFloatAsState(
+        if (pressed && enabled && mode != MotionMode.OFF) s.number("press") / 100f else 0f,
+        s.motionSpec(if (pressed) MotionChannel.PRESS else MotionChannel.BUTTON, mode),
+        label = "chip-press",
+    )
+    GlassSurface(
+        modifier.heightIn(min=42.dp)
+            .graphicsLayer {
+                val k = 1f - pressAmt * .03f
+                scaleX = k; scaleY = k
+            }
+            .selectable(
+                selected = selected,
+                interactionSource = source,
+                indication = null,
+                enabled = enabled,
+                role = Role.RadioButton,
+                onClick = onClick,
+            ),
+        radius=21.dp,role=GlassRole.BUTTON,
+        tint=if(selected)p.accent.copy(alpha=.15f) else Color.Unspecified,
+        pressProgress = { pressAmt },
+    ) {
         Row(Modifier.padding(horizontal=13.dp,vertical=9.dp),verticalAlignment=Alignment.CenterVertically,
             horizontalArrangement=Arrangement.spacedBy(6.dp)) {
             if(selected)Icon(Icons.Outlined.Check,null,Modifier.size(16.dp),tint=p.accent)
@@ -182,10 +207,12 @@ import com.luma.downloader.ui.optics.*
     val source=rememberGlassSource();val overlays=remember{GlassOverlayState()}
     CompositionLocalProvider(LocalBackdropHaze provides source,LocalContentHaze provides source,
         LocalControlHaze provides source,LocalOverlayGlass provides source,LocalGlassOverlay provides overlays) {
+        com.luma.downloader.ui.optics.GravityLightProvider {
         Box(Modifier.fillMaxSize().background(LocalLumaPalette.current.background)) {
             GlassBackdrop(Modifier.matchParentSize().captureGlass(source))
             content()
             GlassOverlayHost(overlays,Modifier.matchParentSize())
+        }
         }
     }
 }
