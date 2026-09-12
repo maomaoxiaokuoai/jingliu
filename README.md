@@ -1,31 +1,76 @@
-# 镜流 Jingliu · 0.9.0 液态玻璃候选
+# 镜流 Jingliu
 
-这是完整 Android 工程的恢复版本，已合入保存下来的 0.9.0 液态玻璃源码改动；**不是 0.9.1 全量扩展移植，也不是已通过真机验收的正式版**。改造范围见 `LIQUID_GLASS_MIGRATION.md`。
+镜流是一个 Android 原生视频与图片解析、下载应用。本仓库只保留**能够生成 APK 的生产源码**、依赖声明、许可证，以及 **GitHub Actions 自动构建与自动发布 APK** 所需文件。
 
-生产模块为 `app` 与 `core`，包含 Manifest、Kotlin/Compose、图标/资源、内嵌 Python 适配层和固定依赖声明。业务源码保持原基线不变，网络依赖在构建时由 Gradle/Chaquopy 获取，不是离线依赖全集。
+仓库中不再保留本地 Android Studio 教程、旧版本说明、测试包、制图中间文件、一次性检查脚本、独立服务端或本机构建脚本。
 
-## 构建
-
-固定使用 JDK 17、Python 3.11、Android SDK 35 / Build Tools 35.0.0、Gradle 8.11.1、AGP 8.9.2、Kotlin 2.1.20。当前没有 Gradle Wrapper；GitHub Actions 会安装固定 Gradle，本地也可使用 Gradle 8.11.1。
+## 保留的工程结构
 
 ```text
-gradle --no-daemon --stacktrace --console=plain :app:testDebugUnitTest :app:assembleDebug
-gradle --no-daemon --stacktrace --console=plain :app:assembleRelease
+.github/workflows/
+  build-apk.yml          推送 main、Pull Request 或手动运行时构建并上传 Debug APK
+  release.yml            推送 v* Tag 时构建并上传 GitHub Release
+app/
+  build.gradle.kts
+  proguard-rules.pro
+  src/main/              Android Manifest、Kotlin/Compose、资源和内嵌 Python 适配层
+core/
+  build.gradle.kts
+  src/main/              解析、网络、账号会话和下载策略等生产 Kotlin 源码
+build.gradle.kts
+gradle.properties
+settings.gradle.kts
+python-runtime-requirements.txt
+LICENSE
+THIRD_PARTY_NOTICES.md
 ```
 
-本地 SDK 路径写入 local.properties，Python 3.11 路径可写入 python-build.properties 的 buildPython；这些个人配置均被排除，不提交。代码包不含构建依赖缓存或签名密钥。
+## 自动构建 APK
 
-## 自动构建与发布
+向 `main` 推送代码、提交面向 `main` 的 Pull Request，或手动运行 **Build Jingliu APK**，工作流会：
 
-- `build-apk.yml`：main 推送、面向 main 的 PR 和手动触发；先运行 JVM 单元测试，再构建五种 Debug APK 并上传 Artifacts。
-- `release.yml`：main 上 VERSION 改动、v* 标签和手动触发；验证版本/标签对应关系，运行测试，构建并检查 Release APK 签名及不可调试标记，最后发布 **prerelease**，附五种架构 APK、提交对应源码 ZIP、SHA256 与 build-info。
+1. 在 GitHub Runner 安装固定版本的 JDK 17、Python 3.11、Android SDK 35、Build Tools 35.0.0 和 Gradle 8.11.1。
+2. 构建 `arm64-v8a`、`armeabi-v7a`、`x86_64`、`x86`、`universal` 共 5 个 Debug APK。
+3. 将 APK 上传到该次 Actions 运行的 **Artifacts**，保留 14 天。
 
-`VERSION` 当前为 `0.9.0`，CI 的 versionCode 为 `1000000 + Git 提交数量`。本地无 CI 环境变量时的低位回退值不能用来直接覆盖已安装的 CI 版本。保留已有 Git 历史，不要在 ZIP 上重建历史后强制推送。
+Debug APK 的内部版本名自动采用“最近 Tag 去掉 `v` + `-dev.运行序号`”，`versionCode` 自动使用“1,000,000 + 当前 Git 提交总数”。高基准用于兼容旧版本曾采用的分架构版本号，避免安装时被判定为降级。
 
-如果某次发布构建失败，随后修复提交没有改 VERSION，可手动重跑 Release 工作流。某标签已指向另一个提交时必须使用新版本，不能移动旧标签。
+## 自动发布正式版本
 
-签名沿用仓库配置的 ANDROID_KEYSTORE_BASE64、ANDROID_KEYSTORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD；可选 DEBUG_KEYSTORE_BASE64 用于固定 debug 签名。未配置固定签名时可能构建成功但无法覆盖安装旧版，不要为安装测试包直接卸载有数据的旧应用。
+创建并推送以 `v` 开头的 Tag，例如：
 
-本恢复环境仅完成源码树校验、纯 Kotlin 测试、语法及配置检查、core 宿主编译；**没有完成 Android 构建、AGSL/真机验收或本次 GitHub 提交**。以实际 Actions 成功记录和对应产物为准。
+```bash
+git tag v0.8.3
+git push origin v0.8.3
+```
 
-许可证见 `LICENSE` 和 `THIRD_PARTY_NOTICES.md`。仅保存你拥有或获准下载的内容，不绕过 DRM、付费或账号访问控制。
+**Release Jingliu APK** 会把 Tag 去掉开头的 `v` 后写入 APK 的内部 `versionName`，自动生成递增 `versionCode`，随后把 5 个架构 APK 上传到同名 GitHub Release。
+
+手动运行 Release 工作流时，只会把 5 个 Release APK 上传到 Actions Artifacts，不会创建正式 GitHub Release。
+
+架构选择：
+
+- `arm64-v8a`：绝大多数安卓手机，优先下载。
+- `armeabi-v7a`：老旧 32 位安卓手机。
+- `x86_64`：64 位安卓模拟器。
+- `x86`：老旧 32 位安卓模拟器。
+- `universal`：不清楚架构时使用，文件最大。
+
+## 发布签名
+
+为了让后续版本能够直接覆盖安装，建议在仓库 Actions Secrets 中配置：
+
+- `ANDROID_KEYSTORE_BASE64`
+- `ANDROID_KEYSTORE_PASSWORD`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+
+Debug 构建可选配置 `DEBUG_KEYSTORE_BASE64`，用于保持 Debug APK 签名稳定。
+
+应用需要连接外部授权桥接服务时，可设置仓库 Actions Variable `QR_AUTH_BRIDGE_URL`；只允许填写纯 HTTPS 域名源地址，不能包含账号、密钥、路径或查询参数。
+
+未配置正式签名时，Release 仍可构建，但会回退到 Debug 签名；不同运行之间若签名变化，已安装版本可能无法直接覆盖升级。
+
+## 许可证
+
+项目许可证和第三方依赖声明属于发布源码及 APK 的必要组成部分，因此保留 `LICENSE` 与 `THIRD_PARTY_NOTICES.md`。

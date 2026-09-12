@@ -37,14 +37,8 @@ import com.luma.downloader.data.GlassRole
     var anchor by remember { mutableStateOf(Rect.Zero) }
     val entry=remember(host,scope) { GlassOverlayEntry(host,scope,OverlayKind.MENU,{locals},
         {currentTitle},false,{settings},{mode},{dismiss()}) {
-        // 0.9.1: menu expansion drives a subtle optical swell via the shared pipeline.
-        // Opacity/scale are read in draw (LocalGlassMotion) so expansion never recomposes rows.
-        val motion = com.luma.downloader.ui.optics.LocalGlassMotion.current
         GlassSurface(Modifier.fillMaxWidth().testTag("selection-menu-surface").semantics{paneTitle=currentTitle},
-            radius=20.dp,role=GlassRole.MENU,
-            pressProgress = { (1f - motion().coerceIn(0f, 2f).coerceAtMost(1f)) * 0.18f },
-            fuseStrength = { 0f },
-            motionSample = { motion() }) {
+            radius=20.dp,role=GlassRole.MENU) {
             Column(Modifier.verticalScroll(rememberScrollState()).padding(vertical=6.dp),content=currentContent)
         }
     } }

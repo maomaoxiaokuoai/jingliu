@@ -89,7 +89,6 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 @Composable fun InsetDivider() { HorizontalDivider(Modifier.padding(start = 18.dp), thickness = .5.dp, color = LocalLumaPalette.current.line) }
 @Composable fun PageList(vm: LumaViewModel, wide: Boolean, title: String, actions: @Composable RowScope.() -> Unit = {}, content: LazyListScope.() -> Unit) {
     val p = LocalLumaPalette.current; val state = rememberLazyListState()
-    val settings = LocalUiSettings.current
     val scrolled by remember { derivedStateOf { state.firstVisibleItemIndex > 0 || state.firstVisibleItemScrollOffset > 40 } }
     val owner=when(title){"解析"->AppPage.PARSE;"下载"->AppPage.DOWNLOADS;"文件"->AppPage.LIBRARY;else->AppPage.SETTINGS}
     LaunchedEffect(scrolled,vm.page) { if(vm.page==owner)vm.contentScrolled = scrolled }
@@ -100,11 +99,7 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
             actions()
         }
         }
-        val (topFade, bottomFade) = rememberScrollEdgeAlphas(state)
-        val fadeEnabled = settings.enabled("scrollFade") && !settings.enabled("reduceTransparency") &&
-            settings.text("material") != "solid"
-        LazyColumn(state = state, modifier = Modifier.fillMaxSize()
-            .scrollEdgeFade(fadeEnabled, topFade, bottomFade, p.background),
+        LazyColumn(state = state, modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(start = if(wide) 32.dp else 20.dp, end = if(wide) 32.dp else 20.dp,
                 top = 10.dp, bottom = if(wide) 32.dp else 148.dp),
             verticalArrangement = Arrangement.spacedBy(LocalUiSettings.current.number("groupGap").dp), content = content)

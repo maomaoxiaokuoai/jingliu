@@ -58,8 +58,8 @@ android {
         applicationId = "com.luma.downloader"
         minSdk = 26
         targetSdk = 35
-        versionCode = ciVersionCode ?: 21
-        versionName = ciVersionName ?: rootProject.file("VERSION").readText().trim()
+        versionCode = ciVersionCode ?: 20
+        versionName = ciVersionName ?: "0.8.2"
         buildConfigField("String", "QR_AUTH_BRIDGE_URL", "\"$qrBridge\"")
         buildConfigField("boolean", "FRAME_METRICS_ENABLED", "false")
         ndk {
@@ -161,7 +161,6 @@ dependencies {
     implementation("io.github.junkfood02.youtubedl-android:ffmpeg:0.18.1")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
-    testImplementation("junit:junit:4.13.2")
 }
 
 val localPython = Properties().apply {

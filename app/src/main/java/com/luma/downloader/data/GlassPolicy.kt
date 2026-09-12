@@ -24,14 +24,12 @@ object GlassPolicy {
         val menu = role == GlassRole.MENU
         val efficient = s.text("performance") == "efficient"
         val blur = when { menu -> basic.blur.coerceAtLeast(if(efficient)12f else 18f)
-            role == GlassRole.THUMB -> basic.blur.coerceAtMost(5f)
-            role == GlassRole.GROUP -> basic.blur.coerceAtMost(18f); else -> basic.blur }
+            role == GlassRole.THUMB -> basic.blur.coerceAtMost(12f); else -> basic.blur }
         val tint = when(role) {
             GlassRole.MENU -> if(efficient).80f+basic.tint*.16f else .64f+basic.tint*.30f
-            GlassRole.GROUP -> (.10f+basic.tint*.40f).coerceIn(.14f,.50f)
+            GlassRole.GROUP -> (.15f+basic.tint*.74f).coerceIn(.30f,.94f)
             GlassRole.BUTTON -> basic.tint.coerceIn(.18f,.88f)
-            GlassRole.THUMB -> .08f+basic.tint*.18f
-            GlassRole.NAVIGATION -> basic.tint.coerceIn(.12f,.55f)
+            GlassRole.THUMB -> .50f+basic.tint*.36f
             else -> basic.tint.coerceIn(.22f,.94f)
         }.let { if(s.enabled("increaseContrast")) it.coerceAtLeast(.82f) else it }
         val shadow = basic.shadow * when(role) { GlassRole.GROUP -> .45f; GlassRole.THUMB -> .38f; GlassRole.FIELD -> .35f; else -> 1f }
@@ -39,17 +37,15 @@ object GlassPolicy {
     }
     fun explanation(s: UiSettings, key: String, supported: Boolean, sdk:Int=33): String? {
         if(key=="grainStrength" && !s.enabled("grain"))return "先开启细腻颗粒"
-        val materialKeys=setOf("blur","transparency","highlight","shadow","grain","grainStrength","refraction","lensBevel","dispersion","saturation","edgeSoft")
-        val opticalToggles=setOf("gravityLight","lensFusion","touchBulge","scrollFade")
-        if(key !in materialKeys && key !in opticalToggles && key !in GlassRole.entries.map{it.setting})return null
+        val materialKeys=setOf("blur","transparency","highlight","shadow","grain","grainStrength","refraction","lensBevel","dispersion","saturation")
+        if(key !in materialKeys && key !in GlassRole.entries.map{it.setting})return null
         if(s.enabled("reduceTransparency"))return "减少透明度已开启，玻璃效果暂不使用"
         if(s.text("material")=="solid")return "全局材质为实色，可在材质菜单重新启用玻璃"
         if(!supported)return "当前系统使用实色回退"
         if(key in materialKeys && GlassRole.entries.none{s.enabled(it.setting)})return "所有玻璃区域均已关闭"
-        if(key in setOf("refraction","lensBevel","dispersion","edgeSoft") && sdk<33)return "当前系统使用模糊；镜片折射需要 Android 13 及以上"
-        if(key in setOf("refraction","lensBevel","dispersion","edgeSoft") && s.text("material")=="frost")return "磨砂模式不使用镜片折射"
-        if(key in setOf("lensBevel","dispersion","edgeSoft") && s.number("refraction")==0f)return "先提高边缘折射强度"
-        if(key=="gravityLight" && s.enabled("reduceMotion"))return "减少动态效果已开启，重力高光已暂停"
+        if(key in setOf("refraction","lensBevel","dispersion") && sdk<33)return "当前系统使用模糊；镜片折射需要 Android 13 及以上"
+        if(key in setOf("refraction","lensBevel","dispersion") && s.text("material")=="frost")return "磨砂模式不使用镜片折射"
+        if(key in setOf("lensBevel","dispersion") && s.number("refraction")==0f)return "先提高边缘折射强度"
         return null
     }
 }

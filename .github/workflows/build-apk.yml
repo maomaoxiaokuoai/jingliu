@@ -67,8 +67,8 @@ jobs:
             printf 'bridgeUrl=%s\n' "$QR_AUTH_BRIDGE_URL" > qr-auth.properties
           fi
 
-          base_version="$(tr -d '\r\n' < VERSION)"
-          [[ "$base_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]] || { echo "Invalid VERSION"; exit 1; }
+          latest_tag="$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || printf 'v0.0.0')"
+          base_version="${latest_tag#v}"
           # The old per-ABI scheme reached versionCode 4020. Keep every new APK safely above it.
           version_code=$((1000000 + $(git rev-list --count HEAD)))
 
@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gradle --no-daemon --stacktrace --console=plain :app:testDebugUnitTest :app:assembleDebug
+          gradle --no-daemon --stacktrace --console=plain :app:assembleDebug
 
       - name: Prepare APK artifact
         shell: bash

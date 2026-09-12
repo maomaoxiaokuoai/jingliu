@@ -10,7 +10,6 @@
 *.pro text eol=lf
 *.md text eol=lf
 *.txt text eol=lf
-VERSION text eol=lf
 
 *.png binary
 *.jpg binary

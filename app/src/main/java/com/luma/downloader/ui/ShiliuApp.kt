@@ -35,14 +35,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.distinctUntilChanged
 import androidx.lifecycle.repeatOnLifecycle
 import com.luma.downloader.data.*
-import com.luma.downloader.ui.optics.GravityLightProvider
 import com.luma.downloader.ui.optics.rememberGlassSource
 import com.luma.downloader.ui.optics.captureGlass
 
 @Composable fun ShiliuApp(vm: LumaViewModel, requestNotifications: () -> Unit) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     val haze = rememberGlassSource()
-    val tabMotion = remember { LiquidTabMotion(vm.page.ordinal) }
     val backdrop = rememberGlassSource()
     val overlays=remember { GlassOverlayState() }
     val storageError by vm.graph.settings.errors.collectAsStateWithLifecycle()
@@ -65,7 +63,6 @@ import com.luma.downloader.ui.optics.captureGlass
     CompositionLocalProvider(LocalUiSettings provides settings, LocalContentHaze provides haze, LocalOverlayGlass provides haze, LocalBackdropHaze provides backdrop, LocalGlassOverlay provides overlays,
         LocalDensity provides Density(density.density, density.fontScale * settings.number("fontScale") / 100f)) {
         LumaTheme(appearance) {
-            GravityLightProvider {
             val p = LocalLumaPalette.current
             BoxWithConstraints(Modifier.fillMaxSize().background(p.background).statusBarsPadding()) {
                 val wide = maxWidth >= 840.dp && maxHeight >= 480.dp
@@ -85,7 +82,6 @@ import com.luma.downloader.ui.optics.captureGlass
                             CompositionLocalProvider(LocalContentHaze provides backdrop) {
                             RetainedSceneHost(keys=AppPage.entries.toList(),selected=vm.page,
                                 distancePx=if(settings.text("tabTransition")=="fade")0f else with(density){settings.number("tabDistance").dp.toPx()},
-                                continuousPosition=if(!wide && settings.enabled("tabMorph") && settings.text("tabTransition")!="fade" && appearance.motion!=MotionMode.OFF) ({tabMotion.value()}) else null,
                                 modifier=Modifier.fillMaxSize()) {page->
                                 Box(Modifier.fillMaxSize()) {
                                     GlassBackdrop(Modifier.matchParentSize())
@@ -99,7 +95,7 @@ import com.luma.downloader.ui.optics.captureGlass
                             }
                             }
                             }
-                            if(!wide) PhoneNavigation(vm, tabMotion,
+                            if(!wide) PhoneNavigation(vm,
                                 Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(horizontal = 22.dp, vertical = 10.dp))
                         }
                     }
@@ -107,7 +103,6 @@ import com.luma.downloader.ui.optics.captureGlass
                 }
                 GlassOverlayHost(overlays,Modifier.matchParentSize())
                 SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = if(wide) 16.dp else 90.dp), snackbar={GlassSnackbar(it)})
-            }
             }
         }
     }
@@ -134,14 +129,37 @@ private val pageIcons = listOf(Icons.Outlined.Link, Icons.Outlined.FileDownload,
     }
     }
 }
-@Composable private fun PhoneNavigation(vm: LumaViewModel, tabMotion: LiquidTabMotion, modifier: Modifier = Modifier) {
-    val settings = LocalUiSettings.current
+@Composable private fun PhoneNavigation(vm: LumaViewModel, modifier: Modifier = Modifier) {
+    val s = LocalUiSettings.current; val p = LocalLumaPalette.current; val mode = LocalAppearance.current.motion
     val count by vm.activeTaskCount.collectAsStateWithLifecycle()
-    LiquidNavigationDock(
-        selected = vm.page, onSelected = { vm.page = it }, activeDownloads = count,
-        collapsed = settings.enabled("navCollapse") && vm.contentScrolled,
-        motion = tabMotion, modifier = modifier,
-    )
+    val dp=LocalDensity.current
+    val collapsed = s.enabled("navCollapse") && vm.contentScrolled
+    val height = animateDpAsState(if(collapsed) 58.dp else 70.dp, s.motionSpec(MotionChannel.CONTROL, mode), label = "nav-height")
+    GlassSurface(modifier.widthIn(max = 520.dp).fillMaxWidth().layout {measurable,constraints->
+        val px=height.value.roundToPx().coerceIn(constraints.minHeight,constraints.maxHeight)
+        val child=measurable.measure(constraints.copy(minHeight=px,maxHeight=px))
+        layout(child.width,px){child.place(0,0)}
+    }, radius = 36.dp) {
+        BoxWithConstraints(Modifier.fillMaxSize().padding(5.dp)) {
+            val cell = maxWidth / 4
+            val offset by animateDpAsState(cell * vm.page.ordinal,
+                if(s.enabled("tabMorph")) s.motionSpec(MotionChannel.INDICATOR, mode) else snap(), label = "nav-position")
+            GlassSurface(Modifier.offset {IntOffset(with(dp){offset.roundToPx()},0)}.width(cell).fillMaxHeight(),radius=36.dp,role=GlassRole.NAVIGATION,tint=p.accent.copy(alpha=.055f),motionSample={offset.value}) {}
+            Row(Modifier.fillMaxSize()) {
+                AppPage.entries.forEachIndexed { i, page ->
+                    val selected = vm.page == page
+                    Column(Modifier.weight(1f).fillMaxHeight().clip(CircleShape).elasticPress()
+                        .testTag("tab-${page.name}").selectable(selected, role = Role.Tab, interactionSource=remember{MutableInteractionSource()}, indication=null, onClick = { vm.page = page }),
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                        BadgedBox(badge = { if(page == AppPage.DOWNLOADS && count > 0) GlassBadge(count.toString()) }) {
+                            Icon(pageIcons[i], null, Modifier.size(23.dp), tint = if(selected) p.accent else p.muted)
+                        }
+                        if(!collapsed) Text(page.title, fontSize = 11.sp, color = if(selected) p.accent else p.muted)
+                    }
+                }
+            }
+        }
+    }
 }
 
 /** Hidden retained pages do not collect every network progress tick. File lists only observe completed files. */

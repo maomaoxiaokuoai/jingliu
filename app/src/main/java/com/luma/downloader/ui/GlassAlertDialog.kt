@@ -22,10 +22,7 @@ import com.luma.downloader.data.GlassRole
     val settings by rememberUpdatedState(LocalUiSettings.current);val mode by rememberUpdatedState(LocalAppearance.current.motion)
     val entry=remember(host,scope,secure) {GlassOverlayEntry(host,scope,OverlayKind.DIALOG,{locals},{"对话框"},secure,{settings},{mode},{dismiss()}) {
         val interactions=remember{MutableInteractionSource()}
-        val motion = com.luma.downloader.ui.optics.LocalGlassMotion.current
-        GlassSurface(Modifier.fillMaxWidth().clickable(interactionSource=interactions,indication=null){},radius=28.dp,role=GlassRole.MENU,
-            pressProgress = { (1f - motion().coerceIn(0f, 2f).coerceAtMost(1f)) * 0.16f },
-            motionSample = { motion() }) {
+        GlassSurface(Modifier.fillMaxWidth().clickable(interactionSource=interactions,indication=null){},radius=28.dp,role=GlassRole.MENU) {
             Column(Modifier.verticalScroll(rememberScrollState()).padding(22.dp),verticalArrangement=Arrangement.spacedBy(18.dp)) {
                 titleContent?.let{ProvideTextStyle(MaterialTheme.typography.titleLarge){it()}}
                 body?.let{ProvideTextStyle(MaterialTheme.typography.bodyLarge){it()}}
